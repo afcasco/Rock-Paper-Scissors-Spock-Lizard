@@ -37,13 +37,6 @@ abstract class Game {
             }
             partida.torn++;
         }
-        if (partida.resultat[USUARI] > partida.resultat[MAQUINA]) {
-            partida.guanyador = USUARI;
-        } else if (partida.resultat[MAQUINA] > partida.resultat[USUARI]) {
-            partida.guanyador = MAQUINA;
-        } else {
-            partida.guanyador = EMPAT;
-        }
     }
 
     /**

@@ -3,7 +3,6 @@ package game;
 class DadesPartida {
     int torn;
     int tornsTotals;
-    int guanyador;
     int[] resultat = new int[2];
     String[] jugadors = {"MAQUINA", "?"};
     String gameType = "";
@@ -17,12 +16,28 @@ class DadesPartida {
         this.gameType = gameType;
     }
 
+    int getWinner() {
+        if (resultat[Game.USUARI] > resultat[Game.MAQUINA]) {
+            return Game.USUARI;
+        } else if (resultat[Game.MAQUINA] > resultat[Game.USUARI]) {
+            return Game.MAQUINA;
+        } else {
+            return Game.EMPAT;
+        }
+    }
+
+    String getwinnerName() {
+        return switch (getWinner()) {
+            case 0 -> jugadors[Game.MAQUINA];
+            case 1 -> jugadors[Game.USUARI];
+            default -> "EMPAT";
+        };
+    }
+
     @Override
     public String toString() {
-        String nomGuanyador = "EMPAT";
-        if (guanyador != 2) nomGuanyador = jugadors[guanyador];
         return ("---------------------------------------------------------------------+" +
                 "\nAquest joc era de tipus: " + gameType +
-                "\nGUANYADOR FINAL: " + nomGuanyador);
+                "\nGUANYADOR FINAL: " + getwinnerName());
     }
 }

@@ -30,7 +30,7 @@ public class AppEAC5P3 {
                 DadesPartida partidaActual = partida.crearDadesPartida(nom, tornsPartida, Game.GAME_TYPE[joc]);
                 partida.jugarPartida(partidaActual);
                 System.out.println(partidaActual);
-                UtilsES.actualitzarPuntuacio(partidaActual.guanyador, posicio, dadesJugadors);
+                UtilsES.actualitzarPuntuacio(partidaActual.getWinner(), posicio, dadesJugadors);
                 UtilsES.mostrarPuntuacio(posicio, dadesJugadors);
             }
         }
