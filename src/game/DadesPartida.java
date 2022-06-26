@@ -36,8 +36,15 @@ class DadesPartida {
 
     @Override
     public String toString() {
-        return ("---------------------------------------------------------------------+" +
-                "\nAquest joc era de tipus: " + gameType +
-                "\nGUANYADOR FINAL: " + getwinnerName());
+        return ("*************************************************************" +
+                "\nGAMETYPE: " + gameType +
+                "\n-------------------------------------------------------------"+
+                "\nGAME RESULTS:"+
+                "\n-------------------------------------------------------------"+
+                "\n"+jugadors[Game.MAQUINA]+"\t|\t"+jugadors[Game.USUARI]+
+                "\n\t"+resultat[Game.MAQUINA]+"\t|\t"+resultat[Game.USUARI]+
+                "\n-------------------------------------------------------------"+
+                "\nTHE WINNER IS... " + getwinnerName())+"!"+
+               "\n*************************************************************";
     }
 }

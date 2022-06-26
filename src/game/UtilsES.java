@@ -44,7 +44,7 @@ final class UtilsES {
     }
 
     static String demanarNom() {
-        System.out.println("introdueix nom jugador: ");
+        System.out.println("What's your name? ");
         Scanner input = new Scanner(System.in);
         return input.next();
     }
@@ -63,7 +63,16 @@ final class UtilsES {
 
 
     static void mostrarTitol(String titolPantalla) {
+        System.out.print("""
+                =============================================================
+                         \t"""+titolPantalla+"""                             
+                \n=============================================================
+                """);
 
+    }
+
+    static void separadorLinies(){
+        System.out.print("-------------------------------------------------------");
     }
 
     static void mostrarError(String missatgeError) {

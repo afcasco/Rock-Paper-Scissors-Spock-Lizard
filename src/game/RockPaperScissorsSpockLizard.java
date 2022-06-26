@@ -8,7 +8,7 @@ class RockPaperScissorsSpockLizard extends Game {
     Retorna el rang valid de les apostes pel joc PEDRA/PAPER/TISSORES/LLANGARDAIX/SPOCK
      */
     @Override
-    int opcionsTriablesJocEscollit() {
+    int getOpcionsAposta() {
         return OPCIONS_APOSTA;
     }
 
@@ -16,7 +16,7 @@ class RockPaperScissorsSpockLizard extends Game {
     Retorna string amb opcions del joc per mostrar al jugador
      */
     @Override
-    String opcionsJocPerMostrar() {
+    String getShowRPSOptions() {
         return SHOW_RPSSL_OPTIONS;
     }
 }

@@ -6,7 +6,7 @@ abstract class Game {
     final static int MAQUINA = 0;
     final static int USUARI = 1;
     final static int EMPAT = 2;
-    final static String[] GAME_TYPE = {"PEDRA PAPER TISSORA", "PEDRA PAPER TISSORA LLANGARDAIX SPOCK"};
+    final static String[] GAME_TYPE = {"ROCK/PAPER/SCISSORS", "ROCK/PAPER/SCISSORS & LIZARD SPOCK"};
     final static String[] APOSTES = {"PEDRA", "PAPER", "TISSORES", "SPOCK", "LLANGARDAIX"};
 
     /*
@@ -69,16 +69,16 @@ abstract class Game {
     int[] generarApostes() {
         int[] apostes = new int[2];
         Random apostaM = new Random();
-        System.out.println(opcionsJocPerMostrar());
-        apostes[USUARI] = UtilsES.demanarAposta(opcionsTriablesJocEscollit());
-        apostes[MAQUINA] = apostaM.nextInt(opcionsTriablesJocEscollit() + 1);
+        System.out.println(getShowRPSOptions());
+        apostes[USUARI] = UtilsES.demanarAposta(getOpcionsAposta());
+        apostes[MAQUINA] = apostaM.nextInt(getOpcionsAposta() + 1);
         System.out.println("La maquina ha triat: " + APOSTES[apostes[MAQUINA]]);
         return apostes;
     }
 
-    abstract int opcionsTriablesJocEscollit();
+    abstract int getOpcionsAposta();
 
-    abstract String opcionsJocPerMostrar();
+    abstract String getShowRPSOptions();
 
 
 }

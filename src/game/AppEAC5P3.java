@@ -3,6 +3,8 @@ package game;
 public class AppEAC5P3 {
 
     private static final String PUNTUACIO_INICIAL = "0";
+    private static final String GAME_TITLE = "ROCK/PAPER/SCISSORS & LIZARD SPOCK!";
+
 
     public static void main(String[] args) {
         AppEAC5P3 programa = new AppEAC5P3();
@@ -23,12 +25,14 @@ public class AppEAC5P3 {
                 {"Èric", "6"}, {"", ""}, {"", ""}};
 
         while (usuariVolJugar()) {
+            UtilsES.mostrarTitol("      GAME CONFIGURATION");
             String nom = UtilsES.demanarNom();
             int posicio = esJugadorValid(nom, dadesJugadors);
             if (posicio != -1) {
                 Game partida;
                 int tornsPartida = UtilsES.demanarQuantesJugades();
                 int joc = escollirJoc();
+                UtilsES.mostrarTitol("               LET'S GO!");
                 partida = (joc == 0) ? new RockPaperScissors() : new RockPaperScissorsSpockLizard();
                 DadesPartida partidaActual = partida.crearDadesPartida(nom, tornsPartida, Game.GAME_TYPE[joc]);
                 partida.jugarPartida(partidaActual);
@@ -72,15 +76,16 @@ public class AppEAC5P3 {
     Qualsevol altre valor introduit mostra error i torna a començar
      */
     boolean usuariVolJugar() {
-        int jugar = UtilsES.demanarEnter("1. Jugar%n0. Sortir%n", "Escull una opcio valida. (%d o %d)%n", 0, 1);
+        UtilsES.mostrarTitol(GAME_TITLE); 
+        int jugar = UtilsES.demanarEnter("1. PLAY%n0. EXIT%n", "Escull una opcio valida. (%d o %d)%n", 0, 1);
         return jugar == 1;
     }
 
     int escollirJoc() {
         return UtilsES.demanarEnter("""
-                0. Pedra/Paper/Tissores
-                1. Pedra/Paper/Tissores/Spock/Llangardaix
-                """, "Opcio incorrecte", 0, 1);
+                0. ROCK PAPER SCISSORS
+                1. ROCK PAPER SCISSORS LIZARD SPOCK
+                """, "Wrong option, try again!", 0, 1);
     }
 
     int esJugadorValid(String nom, String[][] dadesJugadors) {
