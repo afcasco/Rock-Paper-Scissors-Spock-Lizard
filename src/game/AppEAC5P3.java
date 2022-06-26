@@ -10,6 +10,9 @@ public class AppEAC5P3 {
     }
 
     void inici() {
+        /*
+        Names and scores array to be removed later, just used for testing purposes
+         */
         String[][] dadesJugadors = {{"Adria", "5"}, {"Agnes", "0"}, {"Anna", "3"}, {"Arnau", "2"}, {"Beth", "9"},
                 {"Blanca", "6"}, {"Bruna", "1"}, {"Carla", "7"}, {"Cesc", "0"}, {"Clara", "5"}, {"Duna", "2"},
                 {"Laia", "4"}, {"Eloi", "3"}, {"Emma", "6"}, {"Gerard", "8"}, {"Guillem", "5"}, {"Lluc", "7"},
