@@ -3,6 +3,7 @@ package game;
 public class AppEAC5P3 {
 
     private static final String PUNTUACIO_INICIAL = "0";
+
     public static void main(String[] args) {
         AppEAC5P3 programa = new AppEAC5P3();
         programa.inici();
@@ -29,8 +30,8 @@ public class AppEAC5P3 {
                 DadesPartida partidaActual = partida.crearDadesPartida(nom, tornsPartida, Game.GAME_TYPE[joc]);
                 partida.jugarPartida(partidaActual);
                 System.out.println(partidaActual);
-                System.out.println("posicio jugador: " + posicio);
-                System.out.println("Aquest joc era de tipus: "+partidaActual.gameType);
+                UtilsES.actualitzarPuntuacio(partidaActual.guanyador, posicio, dadesJugadors);
+                UtilsES.mostrarPuntuacio(posicio, dadesJugadors);
             }
         }
     }

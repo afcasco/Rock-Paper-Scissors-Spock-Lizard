@@ -21,7 +21,8 @@ class DadesPartida {
     public String toString() {
         String nomGuanyador = "EMPAT";
         if (guanyador != 2) nomGuanyador = jugadors[guanyador];
-
-        return ("torn: " + torn + "\ntornsTotals: " + tornsTotals + "\nguanyador: " + nomGuanyador);
+        return ("---------------------------------------------------------------------+" +
+                "\nAquest joc era de tipus: " + gameType +
+                "\nGUANYADOR FINAL: " + nomGuanyador);
     }
 }

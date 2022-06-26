@@ -8,7 +8,7 @@ class RockPaperScissorsSpockLizard extends Game {
     Retorna el rang valid de les apostes pel joc PEDRA/PAPER/TISSORES/LLANGARDAIX/SPOCK
      */
     @Override
-       int opcionsTriablesJocEscollit() {
+    int opcionsTriablesJocEscollit() {
         return OPCIONS_APOSTA;
     }
 

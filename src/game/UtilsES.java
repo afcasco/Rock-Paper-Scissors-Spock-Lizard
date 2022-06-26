@@ -49,6 +49,19 @@ final class UtilsES {
         return input.next();
     }
 
+    static void actualitzarPuntuacio(int guanyador, int posicio, String[][] dadesJugadors) {
+        if (guanyador == Game.USUARI) {
+            int puntuacio = Integer.parseInt(dadesJugadors[posicio][1]);
+            puntuacio++;
+            dadesJugadors[posicio][1] = Integer.toString(puntuacio);
+        }
+    }
+
+    static void mostrarPuntuacio(int posicio, String[][] dadesJugadors) {
+        System.out.println("posicio jugador: " + posicio + " puntuacio actualitzada: " + dadesJugadors[posicio][1]);
+    }
+
+
     static void mostrarTitol(String titolPantalla) {
 
     }

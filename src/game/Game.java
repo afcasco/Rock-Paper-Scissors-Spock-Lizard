@@ -6,7 +6,7 @@ abstract class Game {
     final static int MAQUINA = 0;
     final static int USUARI = 1;
     final static int EMPAT = 2;
-    final static String[] GAME_TYPE = {"RPS","RPSLS"};
+    final static String[] GAME_TYPE = {"PEDRA PAPER TISSORA", "PEDRA PAPER TISSORA LLANGARDAIX SPOCK"};
     final static String[] APOSTES = {"PEDRA", "PAPER", "TISSORES", "SPOCK", "LLANGARDAIX"};
 
     /*
@@ -14,7 +14,7 @@ abstract class Game {
      */
     DadesPartida crearDadesPartida(String nom, int jugades, String gameType) {
         DadesPartida partida = new DadesPartida();
-        partida.inicialitzar(nom, jugades,gameType);
+        partida.inicialitzar(nom, jugades, gameType);
         return partida;
     }
 
@@ -31,7 +31,7 @@ abstract class Game {
                 partida.resultat[MAQUINA]++;
             }
             if (guanya == 2) {
-                System.out.println("EMPAT");
+                System.out.println("Aquest torn hi ha hagut EMPAT");
             } else {
                 System.out.println("Aquest torn guanya: " + partida.jugadors[guanya]);
             }
