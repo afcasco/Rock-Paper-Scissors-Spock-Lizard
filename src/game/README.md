@@ -1,3 +1,5 @@
+# rockPaperScissorsSpockLizard
+
 SMALL JAVA CONSOLE GAME MADE FOR PRACTISING:
 
 Indcludes 2 variations:
