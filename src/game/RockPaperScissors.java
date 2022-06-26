@@ -1,7 +1,7 @@
 package game;
 
 class RockPaperScissors extends Game {
-    private final static int OPCIONS_APOSTA = 3;
+    private final static int OPCIONS_APOSTA = 2;
     private final static String SHOW_RPS_OPTIONS = "0)Perda 1)Paper 2)Tissores";
 
     /*

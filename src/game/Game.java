@@ -78,7 +78,7 @@ abstract class Game {
         Random apostaM = new Random();
         System.out.println(opcionsJocPerMostrar());
         apostes[USUARI] = UtilsES.demanarAposta(opcionsTriablesJocEscollit());
-        apostes[MAQUINA] = apostaM.nextInt(opcionsTriablesJocEscollit());
+        apostes[MAQUINA] = apostaM.nextInt(opcionsTriablesJocEscollit() + 1);
         System.out.println("La maquina ha triat: " + APOSTES[apostes[MAQUINA]]);
         return apostes;
     }
