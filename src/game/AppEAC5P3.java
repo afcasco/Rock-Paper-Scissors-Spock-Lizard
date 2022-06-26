@@ -26,8 +26,8 @@ public class AppEAC5P3 {
             String nom = UtilsES.demanarNom();
             int posicio = esJugadorValid(nom, dadesJugadors);
             if (posicio != -1) {
-                int tornsPartida = UtilsES.demanarQuantesJugades();
                 Game partida;
+                int tornsPartida = UtilsES.demanarQuantesJugades();
                 int joc = escollirJoc();
                 partida = (joc == 0) ? new RockPaperScissors() : new RockPaperScissorsSpockLizard();
                 DadesPartida partidaActual = partida.crearDadesPartida(nom, tornsPartida, Game.GAME_TYPE[joc]);
