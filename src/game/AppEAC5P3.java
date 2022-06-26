@@ -5,7 +5,6 @@ public class AppEAC5P3 {
     private static final String PUNTUACIO_INICIAL = "0";
     private static final String GAME_TITLE = "ROCK/PAPER/SCISSORS & LIZARD SPOCK!";
 
-
     public static void main(String[] args) {
         AppEAC5P3 programa = new AppEAC5P3();
         programa.inici();
@@ -39,6 +38,7 @@ public class AppEAC5P3 {
                 System.out.println(partidaActual);
                 UtilsES.actualitzarPuntuacio(partidaActual.getWinner(), posicio, dadesJugadors);
                 UtilsES.mostrarPuntuacio(posicio, dadesJugadors);
+                UtilsES.nextGame();
             }
         }
     }
@@ -63,7 +63,7 @@ public class AppEAC5P3 {
             if (dadesJugadors[i][0].trim().equalsIgnoreCase("")) {
                 espaiBuit = true;
                 dadesJugadors[i][0] = nom;
-                dadesJugadors[i][1] = PUNTUACIO_INICIAL; // Canviar a constant
+                dadesJugadors[i][1] = PUNTUACIO_INICIAL;
             } else {
                 i++;
             }
@@ -76,7 +76,7 @@ public class AppEAC5P3 {
     Qualsevol altre valor introduit mostra error i torna a començar
      */
     boolean usuariVolJugar() {
-        UtilsES.mostrarTitol(GAME_TITLE); 
+        UtilsES.mostrarTitol(GAME_TITLE);
         int jugar = UtilsES.demanarEnter("1. PLAY%n0. EXIT%n", "Escull una opcio valida. (%d o %d)%n", 0, 1);
         return jugar == 1;
     }

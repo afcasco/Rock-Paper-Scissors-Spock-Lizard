@@ -22,20 +22,19 @@ abstract class Game {
     Juga una partida tants cops com jugades demanem
     */
     void jugarPartida(DadesPartida partida) {
-        for (int i = 0; i < partida.tornsTotals; i++) {
+        for (int i = 0; i < partida.getTorns(); i++) {
             int[] apostes = generarApostes();
             int guanya = quinaApostaGuanya(apostes[MAQUINA], apostes[USUARI]);
             if (guanya == USUARI) {
-                partida.resultat[USUARI]++;
+                partida.increaseUserWins();
             } else if (guanya == MAQUINA) {
-                partida.resultat[MAQUINA]++;
+                partida.increaseCPUWins();
             }
             if (guanya == 2) {
                 System.out.println("Aquest torn hi ha hagut EMPAT");
             } else {
-                System.out.println("Aquest torn guanya: " + partida.jugadors[guanya]);
+                System.out.println("Aquest torn guanya: " + partida.getJugadors(guanya));
             }
-            partida.torn++;
         }
     }
 

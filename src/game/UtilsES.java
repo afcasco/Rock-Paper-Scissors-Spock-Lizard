@@ -64,14 +64,13 @@ final class UtilsES {
 
     static void mostrarTitol(String titolPantalla) {
         System.out.print("""
-                =============================================================
-                         \t"""+titolPantalla+"""                             
-                \n=============================================================
-                """);
-
+                                 =============================================================
+                                          \t""" + titolPantalla + """                             
+                                 \n=============================================================
+                                 """);
     }
 
-    static void separadorLinies(){
+    static void separadorLinies() {
         System.out.print("-------------------------------------------------------");
     }
 
@@ -81,5 +80,11 @@ final class UtilsES {
 
     static void mostrarGuanyadorPartida(String[] nomsJugadors, int[] tornsGuanyats, int guanyador) {
 
+    }
+
+    static void nextGame(){
+        for(int i=0;i<=10;i++){
+            System.out.println();
+        }
     }
 }
