@@ -39,8 +39,8 @@ abstract class Game {
     }
 
     /**
-     * @param apostaM aposta jugador1
-     * @param apostaU aposta jugador2
+     * @param apostaM aposta autogenerada per CPU
+     * @param apostaU aposta jugador
      * @return guanyador del joc (funciona per pedra/paper/tissores i per l'extensio
      * pedra/paper/tissores/llangardaix/spock
      */
