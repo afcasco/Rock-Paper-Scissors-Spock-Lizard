@@ -64,27 +64,35 @@ final class UtilsES {
 
     static void mostrarTitol(String titolPantalla) {
         System.out.print("""
-                                 =============================================================
+                                 =======================================================================================================
                                           \t""" + titolPantalla + """                             
-                                 \n=============================================================
+                                 \n=======================================================================================================
                                  """);
     }
+
 
     static void separadorLinies() {
         System.out.print("-------------------------------------------------------");
     }
 
     static void mostrarError(String missatgeError) {
+        System.out.print("""        
+                                 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                                 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                                          \t""" + missatgeError + """                             
+                                 \n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                                 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                                 """);
 
     }
 
-    static void mostrarGuanyadorPartida(String[] nomsJugadors, int[] tornsGuanyats, int guanyador) {
-
+    static void mostrarGuanyadorPartida(DadesPartida partida) {
+        System.out.println(partida);
     }
 
-    static void nextGame(){
-        for(int i=0;i<=10;i++){
+/*    static void nextGame() {
+        for (int i = 0; i <= 2; i++) {
             System.out.println();
         }
-    }
+    }*/
 }

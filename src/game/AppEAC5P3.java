@@ -3,7 +3,22 @@ package game;
 public class AppEAC5P3 {
 
     private static final String PUNTUACIO_INICIAL = "0";
-    private static final String GAME_TITLE = "ROCK/PAPER/SCISSORS & LIZARD SPOCK!";
+    private static final String NO_MORE_SPACE_ERROR = """
+                         NO QUEDA ESPAI PER REGISTRAR MES JUGADORS
+                                   PERO ELS JUGADORS EXISTENTS ENCARA PODEN JUGAR
+            """;
+    private static final String GAME_TITLE = """
+ ____   ___   ____ _  __   ____   _    ____  _____ ____     ____   ____ ___ ____ ____   ___  ____  ____ \s
+            |  _ \\ / _ \\ / ___| |/ /  |  _ \\ / \\  |  _ \\| ____|  _ \\   / ___| / ___|_ _/ ___/ ___| / _ \\|  _ \\/ ___|\s
+            | |_) | | | | |   | ' /   | |_) / _ \\ | |_) |  _| | |_) |  \\___ \\| |    | |\\___ \\___ \\| | | | |_) \\___ \\\s
+            |  _ <| |_| | |___| . \\   |  __/ ___ \\|  __/| |___|  _ <    ___) | |___ | | ___) |__) | |_| |  _ < ___) |
+            |_| \\_\\\\___/ \\____|_|\\_\\  |_| /_/   \\_\\_|   |_____|_| \\_\\  |____/ \\____|___|____/____/ \\___/|_| \\_\\____/\s
+             _     ___ _____   _    ____  ____     ____  ____   ___   ____ _  __     __                             \s
+            | |   |_ _|__  /  / \\  |  _ \\|  _ \\   / ___||  _ \\ / _ \\ / ___| |/ /  _  \\ \\                            \s
+            | |    | |  / /  / _ \\ | |_) | | | |  \\___ \\| |_) | | | | |   | ' /  (_)  | |                           \s
+            | |___ | | / /_ / ___ \\|  _ <| |_| |   ___) |  __/| |_| | |___| . \\   _   | |                           \s
+            |_____|___/____/_/   \\_\\_| \\_\\____/   |____/|_|    \\___/ \\____|_|\\_\\ (_)  | |                           \s
+                                                                                     /_/   \s""";
 
     public static void main(String[] args) {
         AppEAC5P3 programa = new AppEAC5P3();
@@ -11,6 +26,7 @@ public class AppEAC5P3 {
     }
 
     void inici() {
+
         /*
         Names and scores array to be removed later, just used for testing purposes
          */
@@ -35,10 +51,10 @@ public class AppEAC5P3 {
                 partida = (joc == 0) ? new RockPaperScissors() : new RockPaperScissorsSpockLizard();
                 DadesPartida partidaActual = partida.crearDadesPartida(nom, tornsPartida, Game.GAME_TYPE[joc]);
                 partida.jugarPartida(partidaActual);
-                System.out.println(partidaActual);
+                UtilsES.mostrarGuanyadorPartida(partidaActual);
                 UtilsES.actualitzarPuntuacio(partidaActual.getWinner(), posicio, dadesJugadors);
                 UtilsES.mostrarPuntuacio(posicio, dadesJugadors);
-                UtilsES.nextGame();
+                //UtilsES.nextGame();
             }
         }
     }
@@ -94,8 +110,9 @@ public class AppEAC5P3 {
             posicio = enregistrarNouJugador(nom, dadesJugadors);
         }
         if (posicio == -1) {
-            System.out.println("No queda espai per registrar mes jugadors," +
-                               " pero encara poden jugar els jugadors existents");
+            //System.out.println("No queda espai per registrar mes jugadors," +
+            //                 " pero encara poden jugar els jugadors existents");
+            UtilsES.mostrarError(NO_MORE_SPACE_ERROR);
         }
         return posicio;
     }
