@@ -3,60 +3,60 @@ package game;
 import java.util.Random;
 
 abstract class Game {
-    final static int MAQUINA = 0;
-    final static int USUARI = 1;
-    final static int EMPAT = 2;
+    final static int CPU = 0;
+    final static int PLAYER = 1;
+    final static int DRAW = 2;
     private final static String[] GAME_TYPE = {"ROCK/PAPER/SCISSORS", "ROCK/PAPER/SCISSORS & LIZARD SPOCK"};
-    private final static String[] APOSTES = {"PEDRA", "PAPER", "TISSORES", "SPOCK", "LLANGARDAIX"};
+    private final static String[] BETS_POOL = {"PEDRA", "PAPER", "TISSORES", "SPOCK", "LLANGARDAIX"};
 
     /*
     Crea una partida pel jugador i jugades passats per parametre
      */
-    DadesPartida crearDadesPartida(String nom, int jugades, String gameType) {
-        DadesPartida partida = new DadesPartida();
-        partida.inicialitzar(nom, jugades, gameType);
-        return partida;
+    GameData createGameData(String name, int rounds, String gameType) {
+        GameData game = new GameData();
+        game.initialize(name, rounds, gameType);
+        return game;
     }
 
     /*
     Juga una partida tants cops com jugades demanem
     */
-    void jugarPartida(DadesPartida partida) {
-        for (int i = 0; i < partida.getTorns(); i++) {
-            int[] apostes = generarApostes();
-            int guanya = quinaApostaGuanya(apostes[MAQUINA], apostes[USUARI]);
-            if (guanya == USUARI) {
-                partida.increaseUserWins();
-            } else if (guanya == MAQUINA) {
-                partida.increaseCPUWins();
+    void playGame(GameData game) {
+        for (int i = 0; i < game.getTorns(); i++) {
+            int[] apostes = getRoundBets();
+            int guanya = getWinningBet(apostes[CPU], apostes[PLAYER]);
+            if (guanya == PLAYER) {
+                game.increaseUserWins();
+            } else if (guanya == CPU) {
+                game.increaseCPUWins();
             }
             if (guanya == 2) {
                 System.out.println("Aquest torn hi ha hagut EMPAT");
             } else {
-                System.out.println("Aquest torn guanya: " + partida.getJugadors(guanya));
+                System.out.println("Aquest torn guanya: " + game.getJugadors(guanya));
             }
         }
     }
 
     /**
-     * @param apostaM aposta autogenerada per CPU
-     * @param apostaU aposta jugador
+     * @param cpuBet aposta autogenerada per CPU
+     * @param playerBet aposta jugador
      * @return guanyador del joc (funciona per pedra/paper/tissores i per l'extensio
      * pedra/paper/tissores/llangardaix/spock
      */
-    int quinaApostaGuanya(int apostaM, int apostaU) {
-        int result = MAQUINA;
-        int resultat = Math.abs(apostaM - apostaU) % 2;
+    int getWinningBet(int cpuBet, int playerBet) {
+        int winner = CPU;
+        int resultat = Math.abs(cpuBet - playerBet) % 2;
         if (resultat == 0) {
-            if (apostaM == apostaU) {
-                result = EMPAT;
-            } else if (apostaM >= apostaU) {
-                result = USUARI;
+            if (cpuBet == playerBet) {
+                winner = DRAW;
+            } else if (cpuBet >= playerBet) {
+                winner = PLAYER;
             }
-        } else if (apostaM <= apostaU) {
-            result = USUARI;
+        } else if (cpuBet <= playerBet) {
+            winner = PLAYER;
         }
-        return result;
+        return winner;
     }
 
     /**
@@ -65,13 +65,13 @@ abstract class Game {
      * if called from RockPaperScissorsSpockLizard returs int array with 2
      * numbers between 0-4
      */
-    int[] generarApostes() {
+    int[] getRoundBets() {
         int[] apostes = new int[2];
         Random apostaM = new Random();
         System.out.println(getShowRPSOptions());
-        apostes[USUARI] = UtilsES.demanarAposta(getOpcionsAposta());
-        apostes[MAQUINA] = apostaM.nextInt(getOpcionsAposta() + 1);
-        System.out.println("La maquina ha triat: " + APOSTES[apostes[MAQUINA]]);
+        apostes[PLAYER] = UtilsES.getPlayerBet(getOpcionsAposta());
+        apostes[CPU] = apostaM.nextInt(getOpcionsAposta() + 1);
+        System.out.println("La maquina ha triat: " + BETS_POOL[apostes[CPU]]);
         return apostes;
     }
 

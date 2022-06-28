@@ -2,7 +2,7 @@ package game;
 
 class RockPaperScissorsSpockLizard extends Game {
     private final static int OPCIONS_APOSTA = 4;
-    private final static String SHOW_RPSSL_OPTIONS = "0)Perda 1)Paper 2)Tissores 3)Spock 4)Llangardaix";
+    private final static String SHOW_RPSSL_OPTIONS = "Choose wisely: 0) ROCK 1) PAPER 2) SCISSORS 3) SPOCK 4) LIZARD";
 
     /*
     Retorna el rang valid de les apostes pel joc PEDRA/PAPER/TISSORES/LLANGARDAIX/SPOCK

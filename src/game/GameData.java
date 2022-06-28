@@ -1,17 +1,17 @@
 package game;
 
-class DadesPartida {
+class GameData {
     private String[] jugadors;
     private String gameType;
     private int torns;
     private int[] resultat;
 
-    void inicialitzar(String nom, int jugades, String gameType) {
+    void initialize(String nom, int jugades, String gameType) {
         torns = jugades;
         jugadors = new String[2];
         resultat = new int[2];
-        jugadors[Game.USUARI] = nom;
-        jugadors[Game.MAQUINA] = "CPU";
+        jugadors[Game.PLAYER] = nom;
+        jugadors[Game.CPU] = "CPU";
         this.gameType = gameType;
     }
 
@@ -20,11 +20,11 @@ class DadesPartida {
     }
 
     void increaseUserWins() {
-        resultat[Game.USUARI]++;
+        resultat[Game.PLAYER]++;
     }
 
     void increaseCPUWins() {
-        resultat[Game.MAQUINA]++;
+        resultat[Game.CPU]++;
     }
 
     String getJugadors(int index) {
@@ -32,19 +32,19 @@ class DadesPartida {
     }
 
     int getWinner() {
-        if (resultat[Game.USUARI] > resultat[Game.MAQUINA]) {
-            return Game.USUARI;
-        } else if (resultat[Game.MAQUINA] > resultat[Game.USUARI]) {
-            return Game.MAQUINA;
+        if (resultat[Game.PLAYER] > resultat[Game.CPU]) {
+            return Game.PLAYER;
+        } else if (resultat[Game.CPU] > resultat[Game.PLAYER]) {
+            return Game.CPU;
         } else {
-            return Game.EMPAT;
+            return Game.DRAW;
         }
     }
 
     String getwinnerName() {
         return switch (getWinner()) {
-            case 0 -> jugadors[Game.MAQUINA];
-            case 1 -> jugadors[Game.USUARI];
+            case 0 -> jugadors[Game.CPU];
+            case 1 -> jugadors[Game.PLAYER];
             default -> "EMPAT";
         };
     }
@@ -56,8 +56,8 @@ class DadesPartida {
                 "\n-------------------------------------------------------------" +
                 "\nGAME RESULTS:" +
                 "\n-------------------------------------------------------------" +
-                "\n   " + jugadors[Game.MAQUINA] + "\t|\t" + jugadors[Game.USUARI] +
-                "\n\t" + resultat[Game.MAQUINA] + "\t|\t" + resultat[Game.USUARI] +
+                "\n   " + jugadors[Game.CPU] + "\t|\t" + jugadors[Game.PLAYER] +
+                "\n\t" + resultat[Game.CPU] + "\t|\t" + resultat[Game.PLAYER] +
                 "\n-------------------------------------------------------------" +
                 "\nTHE WINNER IS... " + getwinnerName()) + "!" +
                "\n*************************************************************";

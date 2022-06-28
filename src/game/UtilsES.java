@@ -7,12 +7,12 @@ final class UtilsES {
         //final class with private constructor to avoid inheritance and make it non instantiable
     }
 
-    static int demanarQuantesJugades() {
-        return demanarEnter("Quantes jugades vols? (%d-%d)%n", "valors valids entre %d i %d%n", 3, 5);
+    static int getRounds() {
+        return getInteger("Quantes jugades vols? (%d-%d)%n", "valors valids entre %d i %d%n", 3, 5);
     }
 
-    static int demanarAposta(int disponibles) {
-        return demanarEnter("", "Valor invalid%n", 0, disponibles);
+    static int getPlayerBet(int disponibles) {
+        return getInteger("", "Valor invalid%n", 0, disponibles);
     }
 
     /**
@@ -22,7 +22,7 @@ final class UtilsES {
      * @param max      valor maxim que es permet entrar
      * @return valor enter entre min i max
      */
-    static int demanarEnter(String pregunta, String error, int min, int max) {
+    static int getInteger(String pregunta, String error, int min, int max) {
         Scanner input = new Scanner(System.in);
         boolean enRang;
         int entrada = 0;
@@ -43,39 +43,39 @@ final class UtilsES {
         return entrada;
     }
 
-    static String demanarNom() {
+    static String getName() {
         System.out.println("What's your name? ");
         Scanner input = new Scanner(System.in);
         return input.next();
     }
 
-    static void actualitzarPuntuacio(int guanyador, int posicio, String[][] dadesJugadors) {
-        if (guanyador == Game.USUARI) {
+    static void updateScore(int guanyador, int posicio, String[][] dadesJugadors) {
+        if (guanyador == Game.PLAYER) {
             int puntuacio = Integer.parseInt(dadesJugadors[posicio][1]);
             puntuacio++;
             dadesJugadors[posicio][1] = Integer.toString(puntuacio);
         }
     }
 
-    static void mostrarPuntuacio(int posicio, String[][] dadesJugadors) {
+    static void showScore(int posicio, String[][] dadesJugadors) {
         System.out.println("posicio jugador: " + posicio + " puntuacio actualitzada: " + dadesJugadors[posicio][1]);
     }
 
 
-    static void mostrarTitol(String titolPantalla) {
+    static void showTitle(String titolPantalla) {
         System.out.print("""
                                  =============================================================================================================================
-                                          \t""" + titolPantalla + """                             
+                                                                                """ + titolPantalla + """                             
                                  \n=============================================================================================================================
                                  """);
     }
 
 
     static void separadorLinies() {
-        System.out.print("-------------------------------------------------------");
+        System.out.print("-----------------------------------------------------------------------------------------------------------------------------\n");
     }
 
-    static void mostrarError(String missatgeError) {
+    static void showErrorMessage(String missatgeError) {
         System.out.print("""        
                                  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                                  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -86,17 +86,14 @@ final class UtilsES {
 
     }
 
-    static void mostrarGuanyadorPartida(DadesPartida partida) {
+    static void showGameWinner(GameData partida) {
         System.out.println(partida);
     }
 
     //input slips into next round causing exception when scanner reads values
     static void nextGame() {
+        Scanner input = new Scanner(System.in);
         System.out.println("Press [ENTER] to continue...");
-        try {
-            int discard = System.in.read();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        input.nextLine();
     }
 }

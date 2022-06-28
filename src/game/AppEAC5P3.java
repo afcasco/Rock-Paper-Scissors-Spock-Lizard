@@ -21,11 +21,11 @@ public class AppEAC5P3 {
                                                                                      /_/   \s""";
 
     public static void main(String[] args) {
-        AppEAC5P3 programa = new AppEAC5P3();
-        programa.inici();
+        AppEAC5P3 app = new AppEAC5P3();
+        app.start();
     }
 
-    void inici() {
+    void start() {
 
         /*
         Names and scores array to be removed later, just used for testing purposes
@@ -39,21 +39,22 @@ public class AppEAC5P3 {
                 {"Roger", "9"}, {"Sergi", "3"}, {"Txell", "1"}, {"Xavi", "9"}, {"Alex", "4"}, {"Èlia", "0"},
                 {"Èric", "6"}, {"", ""}, {"", ""}};
 
-        while (usuariVolJugar()) {
-            UtilsES.mostrarTitol("      GAME CONFIGURATION");
-            String nom = UtilsES.demanarNom();
+        while (userWantsToPlay()) {
+            UtilsES.showTitle("GAME CONFIGURATION");
+            String nom = UtilsES.getName();
             int posicio = esJugadorValid(nom, dadesJugadors);
             if (posicio != -1) {
                 Game partida;
-                int tornsPartida = UtilsES.demanarQuantesJugades();
+                int tornsPartida = UtilsES.getRounds();
+                UtilsES.separadorLinies();
                 int joc = escollirJoc();
-                UtilsES.mostrarTitol("               LET'S GO!");
+                UtilsES.showTitle("LET'S GO!");
                 partida = (joc == 0) ? new RockPaperScissors() : new RockPaperScissorsSpockLizard();
-                DadesPartida partidaActual = partida.crearDadesPartida(nom, tornsPartida, partida.getGameType(joc));
-                partida.jugarPartida(partidaActual);
-                UtilsES.mostrarGuanyadorPartida(partidaActual);
-                UtilsES.actualitzarPuntuacio(partidaActual.getWinner(), posicio, dadesJugadors);
-                UtilsES.mostrarPuntuacio(posicio, dadesJugadors);
+                GameData partidaActual = partida.createGameData(nom, tornsPartida, partida.getGameType(joc));
+                partida.playGame(partidaActual);
+                UtilsES.showGameWinner(partidaActual);
+                UtilsES.updateScore(partidaActual.getWinner(), posicio, dadesJugadors);
+                UtilsES.showScore(posicio, dadesJugadors);
                 UtilsES.nextGame();
             }
         }
@@ -91,16 +92,15 @@ public class AppEAC5P3 {
     Retorna true quan l'usuari entra 1, i fals quan l'usuari entra 0
     Qualsevol altre valor introduit mostra error i torna a començar
      */
-    boolean usuariVolJugar() {
-        UtilsES.mostrarTitol(GAME_TITLE);
-        int jugar = UtilsES.demanarEnter("1. PLAY%n0. EXIT%n", "Escull una opcio valida. (%d o %d)%n", 0, 1);
+    boolean userWantsToPlay() {
+        UtilsES.showTitle(GAME_TITLE);
+        int jugar = UtilsES.getInteger("1. PLAY%n0. EXIT%n", "Escull una opcio valida. (%d o %d)%n", 0, 1);
         return jugar == 1;
     }
 
     int escollirJoc() {
-        return UtilsES.demanarEnter("""
-                0. ROCK PAPER SCISSORS
-                1. ROCK PAPER SCISSORS LIZARD SPOCK
+        return UtilsES.getInteger("""
+                || 0. ROCK PAPER SCISSORS\t||\t1. ROCK PAPER SCISSORS LIZARD SPOCK ||
                 """, "Wrong option, try again!", 0, 1);
     }
 
@@ -110,7 +110,7 @@ public class AppEAC5P3 {
             posicio = enregistrarNouJugador(nom, dadesJugadors);
         }
         if (posicio == -1) {
-            UtilsES.mostrarError(NO_MORE_SPACE_ERROR);
+            UtilsES.showErrorMessage(NO_MORE_SPACE_ERROR);
         }
         return posicio;
     }
