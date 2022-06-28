@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 final class UtilsES {
     private UtilsES() {
-        // Constructor privat perque no es pugui instanciar la classe
+        //final class with private constructor to avoid inheritance and make it non instantiable
     }
 
     static int demanarQuantesJugades() {
@@ -94,7 +94,7 @@ final class UtilsES {
     static void nextGame() {
         System.out.println("Press [ENTER] to continue...");
         try {
-            System.in.read();
+            int discard = System.in.read();
         } catch (Exception e) {
             e.printStackTrace();
         }
