@@ -6,8 +6,8 @@ abstract class Game {
     final static int MAQUINA = 0;
     final static int USUARI = 1;
     final static int EMPAT = 2;
-    final static String[] GAME_TYPE = {"ROCK/PAPER/SCISSORS", "ROCK/PAPER/SCISSORS & LIZARD SPOCK"};
-    final static String[] APOSTES = {"PEDRA", "PAPER", "TISSORES", "SPOCK", "LLANGARDAIX"};
+    private final static String[] GAME_TYPE = {"ROCK/PAPER/SCISSORS", "ROCK/PAPER/SCISSORS & LIZARD SPOCK"};
+    private final static String[] APOSTES = {"PEDRA", "PAPER", "TISSORES", "SPOCK", "LLANGARDAIX"};
 
     /*
     Crea una partida pel jugador i jugades passats per parametre
@@ -73,6 +73,10 @@ abstract class Game {
         apostes[MAQUINA] = apostaM.nextInt(getOpcionsAposta() + 1);
         System.out.println("La maquina ha triat: " + APOSTES[apostes[MAQUINA]]);
         return apostes;
+    }
+
+    String getGameType(int joc) {
+        return GAME_TYPE[joc];
     }
 
     abstract int getOpcionsAposta();

@@ -90,9 +90,13 @@ final class UtilsES {
         System.out.println(partida);
     }
 
-/*    static void nextGame() {
-        for (int i = 0; i <= 2; i++) {
-            System.out.println();
+    //input slips into next round causing exception when scanner reads values
+    static void nextGame() {
+        System.out.println("Press [ENTER] to continue...");
+        try {
+            System.in.read();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    }*/
+    }
 }

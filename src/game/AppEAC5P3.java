@@ -49,12 +49,12 @@ public class AppEAC5P3 {
                 int joc = escollirJoc();
                 UtilsES.mostrarTitol("               LET'S GO!");
                 partida = (joc == 0) ? new RockPaperScissors() : new RockPaperScissorsSpockLizard();
-                DadesPartida partidaActual = partida.crearDadesPartida(nom, tornsPartida, Game.GAME_TYPE[joc]);
+                DadesPartida partidaActual = partida.crearDadesPartida(nom, tornsPartida, partida.getGameType(joc));
                 partida.jugarPartida(partidaActual);
                 UtilsES.mostrarGuanyadorPartida(partidaActual);
                 UtilsES.actualitzarPuntuacio(partidaActual.getWinner(), posicio, dadesJugadors);
                 UtilsES.mostrarPuntuacio(posicio, dadesJugadors);
-                //UtilsES.nextGame();
+                UtilsES.nextGame();
             }
         }
     }
@@ -110,8 +110,6 @@ public class AppEAC5P3 {
             posicio = enregistrarNouJugador(nom, dadesJugadors);
         }
         if (posicio == -1) {
-            //System.out.println("No queda espai per registrar mes jugadors," +
-            //                 " pero encara poden jugar els jugadors existents");
             UtilsES.mostrarError(NO_MORE_SPACE_ERROR);
         }
         return posicio;
