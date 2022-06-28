@@ -2,6 +2,8 @@ package game;
 
 public class AppEAC5P3 {
 
+    //testing fladñkjf
+
     private static final String PUNTUACIO_INICIAL = "0";
     private static final String NO_MORE_SPACE_ERROR = """
                          NO QUEDA ESPAI PER REGISTRAR MES JUGADORS
