@@ -2,25 +2,23 @@ package game;
 
 public class AppEAC5P3 {
 
-    // FileUtilsBranch
-    // Testing file IO
     private static final String PUNTUACIO_INICIAL = "0";
     private static final String NO_MORE_SPACE_ERROR = """
                          NO QUEDA ESPAI PER REGISTRAR MES JUGADORS
                                    PERO ELS JUGADORS EXISTENTS ENCARA PODEN JUGAR
             """;
     private static final String GAME_TITLE = """
- ____   ___   ____ _  __   ____   _    ____  _____ ____     ____   ____ ___ ____ ____   ___  ____  ____ \s
-            |  _ \\ / _ \\ / ___| |/ /  |  _ \\ / \\  |  _ \\| ____|  _ \\   / ___| / ___|_ _/ ___/ ___| / _ \\|  _ \\/ ___|\s
-            | |_) | | | | |   | ' /   | |_) / _ \\ | |_) |  _| | |_) |  \\___ \\| |    | |\\___ \\___ \\| | | | |_) \\___ \\\s
-            |  _ <| |_| | |___| . \\   |  __/ ___ \\|  __/| |___|  _ <    ___) | |___ | | ___) |__) | |_| |  _ < ___) |
-            |_| \\_\\\\___/ \\____|_|\\_\\  |_| /_/   \\_\\_|   |_____|_| \\_\\  |____/ \\____|___|____/____/ \\___/|_| \\_\\____/\s
-             _     ___ _____   _    ____  ____     ____  ____   ___   ____ _  __     __                             \s
-            | |   |_ _|__  /  / \\  |  _ \\|  _ \\   / ___||  _ \\ / _ \\ / ___| |/ /  _  \\ \\                            \s
-            | |    | |  / /  / _ \\ | |_) | | | |  \\___ \\| |_) | | | | |   | ' /  (_)  | |                           \s
-            | |___ | | / /_ / ___ \\|  _ <| |_| |   ___) |  __/| |_| | |___| . \\   _   | |                           \s
-            |_____|___/____/_/   \\_\\_| \\_\\____/   |____/|_|    \\___/ \\____|_|\\_\\ (_)  | |                           \s
-                                                                                     /_/   \s""";
+            ____   ___   ____ _  __   ____   _    ____  _____ ____     ____   ____ ___ ____ ____   ___  ____  ____ \s
+                       |  _ \\ / _ \\ / ___| |/ /  |  _ \\ / \\  |  _ \\| ____|  _ \\   / ___| / ___|_ _/ ___/ ___| / _ \\|  _ \\/ ___|\s
+                       | |_) | | | | |   | ' /   | |_) / _ \\ | |_) |  _| | |_) |  \\___ \\| |    | |\\___ \\___ \\| | | | |_) \\___ \\\s
+                       |  _ <| |_| | |___| . \\   |  __/ ___ \\|  __/| |___|  _ <    ___) | |___ | | ___) |__) | |_| |  _ < ___) |
+                       |_| \\_\\\\___/ \\____|_|\\_\\  |_| /_/   \\_\\_|   |_____|_| \\_\\  |____/ \\____|___|____/____/ \\___/|_| \\_\\____/\s
+                        _     ___ _____   _    ____  ____     ____  ____   ___   ____ _  __     __                             \s
+                       | |   |_ _|__  /  / \\  |  _ \\|  _ \\   / ___||  _ \\ / _ \\ / ___| |/ /  _  \\ \\                            \s
+                       | |    | |  / /  / _ \\ | |_) | | | |  \\___ \\| |_) | | | | |   | ' /  (_)  | |                           \s
+                       | |___ | | / /_ / ___ \\|  _ <| |_| |   ___) |  __/| |_| | |___| . \\   _   | |                           \s
+                       |_____|___/____/_/   \\_\\_| \\_\\____/   |____/|_|    \\___/ \\____|_|\\_\\ (_)  | |                           \s
+                                                                                                /_/   \s""";
 
     public static void main(String[] args) {
         AppEAC5P3 app = new AppEAC5P3();
@@ -28,6 +26,8 @@ public class AppEAC5P3 {
     }
 
     void start() {
+
+        FileUtils.inicialitza();
 
         /*
         Names and scores array to be removed later, just used for testing purposes
@@ -41,25 +41,43 @@ public class AppEAC5P3 {
                 {"Roger", "9"}, {"Sergi", "3"}, {"Txell", "1"}, {"Xavi", "9"}, {"Alex", "4"}, {"Èlia", "0"},
                 {"Èric", "6"}, {"", ""}, {"", ""}};
 
-        while (userWantsToPlay()) {
-            UtilsES.showTitle("GAME CONFIGURATION");
-            String nom = UtilsES.getName();
-            int posicio = esJugadorValid(nom, dadesJugadors);
-            if (posicio != -1) {
-                Game partida;
-                int tornsPartida = UtilsES.getRounds();
-                UtilsES.separadorLinies();
-                int joc = escollirJoc();
-                UtilsES.showTitle("LET'S GO!");
-                partida = (joc == 0) ? new RockPaperScissors() : new RockPaperScissorsSpockLizard();
-                GameData partidaActual = partida.createGameData(nom, tornsPartida, partida.getGameType(joc));
-                partida.playGame(partidaActual);
-                UtilsES.showGameWinner(partidaActual);
-                UtilsES.updateScore(partidaActual.getWinner(), posicio, dadesJugadors);
-                UtilsES.showScore(posicio, dadesJugadors);
-                UtilsES.nextGame();
+        int keepPlaying = userWantsToPlay();
+        while (keepPlaying != 0) {
+            switch (keepPlaying) {
+                case 1 -> playTheGame(dadesJugadors);
+                case 2 -> listGameFiles();
+                default -> listPlayerGames();
             }
+            keepPlaying = userWantsToPlay();
         }
+    }
+
+    void playTheGame(String[][] dadesJugadors) {
+        UtilsES.showTitle("GAME CONFIGURATION");
+        String nom = UtilsES.getName();
+        int posicio = esJugadorValid(nom, dadesJugadors);
+        if (posicio != -1) {
+            Game partida;
+            int tornsPartida = UtilsES.getRounds();
+            UtilsES.separadorLinies();
+            int joc = escollirJoc();
+            UtilsES.showTitle("LET'S GO!");
+            partida = (joc == 0) ? new RockPaperScissors() : new RockPaperScissorsSpockLizard();
+            GameData partidaActual = partida.createGameData(nom, tornsPartida, partida.getGameType(joc));
+            partida.playGame(partidaActual);
+            UtilsES.showGameWinner(partidaActual);
+            UtilsES.updateScore(partidaActual.getWinner(), posicio, dadesJugadors);
+            UtilsES.showScore(posicio, dadesJugadors);
+            UtilsES.nextGame();
+        }
+    }
+
+    void listGameFiles() {
+        System.out.println("llistant fitxers de partides....");
+    }
+
+    void listPlayerGames() {
+        System.out.println("llistant partides d'un jugador...");
     }
 
     int cercaPosJugador(String nom, String[][] dadesJugadors) {
@@ -94,10 +112,10 @@ public class AppEAC5P3 {
     Retorna true quan l'usuari entra 1, i fals quan l'usuari entra 0
     Qualsevol altre valor introduit mostra error i torna a començar
      */
-    boolean userWantsToPlay() {
+    int userWantsToPlay() {
         UtilsES.showTitle(GAME_TITLE);
-        int jugar = UtilsES.getInteger("1. PLAY%n0. EXIT%n", "Escull una opcio valida. (%d o %d)%n", 0, 1);
-        return jugar == 1;
+        return UtilsES.getInteger("1. PLAY%n2. Llista de fitxers de partides%n" +
+                                  "3. Partides d'un jugador%n0. EXIT%n", "Escull una opcio valida. (%d o %d)%n", 0, 3);
     }
 
     int escollirJoc() {
