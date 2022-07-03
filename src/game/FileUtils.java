@@ -14,8 +14,8 @@ public final class FileUtils {
 
     private FileUtils() {
     }
-    // redundant and not needed
-/*    static void inicialitza() {
+
+    static void inicialitza() {
         File file = new File(BASE_FOLDER);
         System.out.println("Data folder set to: " + file);
         if (!file.exists()) {
@@ -31,7 +31,7 @@ public final class FileUtils {
         } else {
             System.out.println("Previous game data found!");
         }
-    }*/
+    }
 
     static String[][] getGameFiles() {
         File gamesFolder = new File(GAMES_FOLDER);
@@ -87,6 +87,10 @@ public final class FileUtils {
 
     static int[][] getHistoricJugador(String nomJugador) {
         return new int[0][0];
+
+    }
+
+    static void savePlayers(String[][] players){
 
     }
 }

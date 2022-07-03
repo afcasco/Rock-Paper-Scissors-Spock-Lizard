@@ -27,24 +27,21 @@ public class AppEAC5P3 {
 
     void start() {
 
-        //*+
-        // I dont know why someone would use a method just for that...
-        // FileUtils.inicialitza();
-
+        FileUtils.inicialitza();
         /*
         Names and scores array to be removed later, just used for testing purposes
          */
-        String [][] dadesJugadors = {
-                {"", ""}, {"", ""}, {"", ""},{"", ""},
-                {"", ""}, {"", ""}, {"", ""},{"", ""},
-                {"", ""}, {"", ""}, {"", ""},{"", ""},
-                {"", ""}, {"", ""}, {"", ""},{"", ""},
-                {"", ""}, {"", ""}, {"", ""},{"", ""},
-                {"", ""}, {"", ""}, {"", ""},{"", ""},
-                {"", ""}, {"", ""}, {"", ""},{"", ""},
-                {"", ""}, {"", ""}, {"", ""},{"", ""},
-                {"", ""}, {"", ""}, {"", ""},{"", ""},
-                {"", ""}, {"", ""}, {"", ""},{"", ""}
+        String[][] dadesJugadors = {
+                {"", ""}, {"", ""}, {"", ""}, {"", ""},
+                {"", ""}, {"", ""}, {"", ""}, {"", ""},
+                {"", ""}, {"", ""}, {"", ""}, {"", ""},
+                {"", ""}, {"", ""}, {"", ""}, {"", ""},
+                {"", ""}, {"", ""}, {"", ""}, {"", ""},
+                {"", ""}, {"", ""}, {"", ""}, {"", ""},
+                {"", ""}, {"", ""}, {"", ""}, {"", ""},
+                {"", ""}, {"", ""}, {"", ""}, {"", ""},
+                {"", ""}, {"", ""}, {"", ""}, {"", ""},
+                {"", ""}, {"", ""}, {"", ""}, {"", ""}
 
         };
 
@@ -82,9 +79,9 @@ public class AppEAC5P3 {
         }
     }
 
-    void listGameFiles(){
+    void listGameFiles() {
         String[][] games = FileUtils.getGameFiles();
-        if(games!=null){
+        if (games != null) {
             UtilsES.showTitle("SAVED PLAYER FILES");
             for (String[] game : games) {
                 System.out.println("Name: " + game[0] + "\t" + "Size: " + game[1]);
