@@ -83,10 +83,14 @@ public class AppEAC5P3 {
     }
 
     void listGameFiles(){
-        UtilsES.showTitle("SAVE PLAYER FILES");
         String[][] games = FileUtils.getGameFiles();
-        for (String[] game : games) {
-            System.out.println("Name: " + game[0] + "\t" + "Size: " + game[1]);
+        if(games!=null){
+            UtilsES.showTitle("SAVED PLAYER FILES");
+            for (String[] game : games) {
+                System.out.println("Name: " + game[0] + "\t" + "Size: " + game[1]);
+            }
+        } else {
+            System.out.println("NO GAME FILES FOUND");
         }
         UtilsES.nextGame();
     }

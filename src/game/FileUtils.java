@@ -36,15 +36,21 @@ public final class FileUtils {
     static String[][] getGameFiles() {
         File gamesFolder = new File(GAMES_FOLDER);
         File[] filesInfolder = gamesFolder.listFiles();
-        String[][] logFiles = new String[filesInfolder.length][2];
+        if(filesInfolder!=null){
+            String[][] logFiles = new String[filesInfolder.length][2];
 
-        // Loop a tot el contingut del directori
-        for (int i = 0; i < filesInfolder.length; i++) {
-            long mida = filesInfolder[i].length();
-            logFiles[i][FILE_NAME] = filesInfolder[i].getName();
-            logFiles[i][FILE_SIZE] = Long.toString(mida);
+            // Loop a tot el contingut del directori
+            for (int i = 0; i < filesInfolder.length; i++) {
+                long mida = filesInfolder[i].length();
+                logFiles[i][FILE_NAME] = filesInfolder[i].getName();
+                logFiles[i][FILE_SIZE] = Long.toString(mida);
+            }
+
+            return logFiles;
+        } else {
+            return null;
         }
-        return logFiles;
+
     }
 
     /**
