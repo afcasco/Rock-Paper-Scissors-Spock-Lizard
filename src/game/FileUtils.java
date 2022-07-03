@@ -48,10 +48,9 @@ public final class FileUtils {
      */
     static String[][] loadPlayers() {
 
-        String[][] dadesJugadors = null;
         File players = new File(PLAYER_LIST);
         if (players.exists()) {
-            dadesJugadors = new String[40][2];
+            String[][] dadesJugadors = new String[40][2];
             try (Scanner input = new Scanner(players)) {
                 String temp;
                 int pos = 0;
@@ -60,16 +59,20 @@ public final class FileUtils {
                     if (!temp.equals(",")) {
                         dadesJugadors[pos] = temp.split(",");
                     } else {
-                        dadesJugadors[pos][0]="";
-                        dadesJugadors[pos][1]="";
+                        dadesJugadors[pos][0] = "";
+                        dadesJugadors[pos][1] = "";
                     }
                     pos++;
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            return dadesJugadors;
+        } else {
+            return null;
         }
-        return dadesJugadors;
+
+
     }
 
     static void guardarPartidaEnHistoric(String nomJugador, int numJugades, int resultat) {

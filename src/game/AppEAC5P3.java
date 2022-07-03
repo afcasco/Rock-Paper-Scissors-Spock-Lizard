@@ -6,7 +6,7 @@ package game;
  */
 public class AppEAC5P3 {
 
-    private static final String PLAYER_OPTIONS = "1. PLAY%n2. Llista de fitxers de partides%" +
+    private static final String PLAYER_OPTIONS = "1. PLAY%n2. Llista de fitxers de partides%"+
                                                  "n3. Partides d'un jugador%n4. View Rules%n0. EXIT%n";
     private static final String PUNTUACIO_INICIAL = "0";
     private static final int MAX_PLAYERS = 40;
@@ -52,7 +52,7 @@ public class AppEAC5P3 {
         app.start();
     }
 
-    void start() {
+     public void start() {
 
         // Checks for (or creates) data directory structure
         FileUtils.inicialitza();
@@ -73,20 +73,31 @@ public class AppEAC5P3 {
         } while (options != 0);
     }
 
-    private void viewGameRules() {
-        int option = UtilsES.getInteger("""
+    /**
+     * Show rock paper scissors and rock paper scissors lizard spock rules
+     */
+    public void viewGameRules() {
+         int option = UtilsES.getInteger("""
                 **********************************************************************
                 | 0. ROCK PAPER SCISSORS \t|\t1. ROCK PAPER SCISSORS LIZARD SPOCK |
                 **********************************************************************
                 """, "Wrong option, try again!", 0, 1);
-        switch (option) {
-            case 0 -> System.out.println(RPS_RULES);
-            case 1 -> System.out.println(RPSLS_RULES);
-        }
-        UtilsES.nextGame();
+         switch(option){
+             case 0 -> System.out.println(RPS_RULES);
+             case 1 -> System.out.println(RPSLS_RULES);
+         }
+         UtilsES.nextGame();
     }
 
-    void playTheGame(String[][] dadesJugadors) {
+    /**
+     *
+     * @param dadesJugadors Array with loaded players from disk, if there's no players to load
+     *                      it's passed as an empty array that will fit 40 players and their score
+     * this method will ask for the players name, how many rounds of the game he/she wants to play
+     *                      and what variation, it will play all the rounds player vs cpu random bets
+     *
+     */
+    public void playTheGame(String[][] dadesJugadors) {
         UtilsES.showTitle("GAME CONFIGURATION");
         String nom = UtilsES.getName("What's your name? ");
         int posicio = isValidPlayer(nom, dadesJugadors);
@@ -109,7 +120,10 @@ public class AppEAC5P3 {
         }
     }
 
-    void listGameFiles() {
+    /**
+     * List all the game files containing historic player data
+     */
+    public void listGameFiles() {
         String[][] games = FileUtils.getGameFiles();
         if (games != null) {
             UtilsES.showTitle("SAVED PLAYER FILES");
@@ -122,7 +136,10 @@ public class AppEAC5P3 {
         UtilsES.nextGame();
     }
 
-    void listPlayerGames() {
+    /**
+     * View historic game data for the selected player name
+     */
+    public void listPlayerGames() {
         String playerName = UtilsES.getName("Enter a player name to show his/her game history...");
         int[][] playerHistory = FileUtils.getPlayerHistory(playerName);
         if (playerHistory != null) {
@@ -135,27 +152,39 @@ public class AppEAC5P3 {
         UtilsES.nextGame();
     }
 
-    int findPlayerPosition(String nom, String[][] dadesJugadors) {
-        boolean trobat = false;
+    /**
+     *
+     * @param name name of the player to locate in playerData
+     * @param playerData array of players
+     * @return returns position of player {name} in {playerData} or {-1} if it's not found
+     */
+    public int findPlayerPosition(String name, String[][] playerData) {
+        boolean found = false;
         int i = 0;
-        while (!trobat && i < dadesJugadors.length) {
-            if (dadesJugadors[i][0].trim().equalsIgnoreCase(nom)) {
-                trobat = true;
+        while (!found && i < playerData.length) {
+            if (playerData[i][0].trim().equalsIgnoreCase(name)) {
+                found = true;
             } else {
                 i++;
             }
         }
-        return trobat ? i : -1;
+        return found ? i : -1;
     }
 
-    int recordNewPlayer(String nom, String[][] dadesJugadors) {
+    /**
+     *
+     * @param name name of the player to record in playerData
+     * @param playerData array of player names and score
+     * @return position where {name} was recorded or {-1} if array was full and recording failed
+     */
+    public int recordNewPlayer(String name, String[][] playerData) {
         boolean espaiBuit = false;
         int i = 0;
-        while (!espaiBuit && i < dadesJugadors.length) {
-            if (dadesJugadors[i][0].trim().equalsIgnoreCase("")) {
+        while (!espaiBuit && i < playerData.length) {
+            if (playerData[i][0].trim().equalsIgnoreCase("")) {
                 espaiBuit = true;
-                dadesJugadors[i][0] = nom;
-                dadesJugadors[i][1] = PUNTUACIO_INICIAL;
+                playerData[i][0] = name;
+                playerData[i][1] = PUNTUACIO_INICIAL;
             } else {
                 i++;
             }
@@ -163,16 +192,20 @@ public class AppEAC5P3 {
         return espaiBuit ? i : -1;
     }
 
-    /*
-    Retorna true quan l'usuari entra 1, i fals quan l'usuari entra 0
-    Qualsevol altre valor introduit mostra error i torna a començar
+    /**
+     *
+     * @return option choosen by user
      */
-    int getUserMenuOption() {
+    public int getUserMenuOption() {
         UtilsES.showTitle(GAME_TITLE);
         return UtilsES.getInteger(PLAYER_OPTIONS, "Escull una opcio valida. (%d o %d)%n", 0, 4);
     }
 
-    int chooseGameMenu() {
+    /**
+     *
+     * @return type of game to be played
+     */
+    public int chooseGameMenu() {
         return UtilsES.getInteger("""
                 **********************************************************************
                 | 0. ROCK PAPER SCISSORS \t|\t1. ROCK PAPER SCISSORS LIZARD SPOCK |
@@ -180,7 +213,7 @@ public class AppEAC5P3 {
                 """, "Wrong option, try again!", 0, 1);
     }
 
-    int isValidPlayer(String nom, String[][] dadesJugadors) {
+    public int isValidPlayer(String nom, String[][] dadesJugadors) {
         int posicio = findPlayerPosition(nom, dadesJugadors);
         if (posicio == -1) {
             posicio = recordNewPlayer(nom, dadesJugadors);
