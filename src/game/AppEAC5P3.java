@@ -6,7 +6,7 @@ package game;
  */
 public class AppEAC5P3 {
 
-    private static final String PLAYER_OPTIONS = "1. PLAY%n2. Llista de fitxers de partides%"+
+    private static final String PLAYER_OPTIONS = "1. PLAY%n2. Llista de fitxers de partides%" +
                                                  "n3. Partides d'un jugador%n4. View Rules%n0. EXIT%n";
     private static final String PUNTUACIO_INICIAL = "0";
     private static final int MAX_PLAYERS = 40;
@@ -60,35 +60,43 @@ public class AppEAC5P3 {
         String[][] dadesJugadors = FileUtils.loadPlayers();
         // if no file is found, generates a working 40*2 array to store data
         if (dadesJugadors == null) dadesJugadors = UtilsES.initializeEmptyArray(MAX_PLAYERS, DATA_FIELDS);
-
+        GameData partidaActual = null;
         int options;
         do {
             options = getUserMenuOption();
             switch (options) {
-                case 1 -> playTheGame(dadesJugadors);
+                case 1 -> partidaActual = playTheGame(dadesJugadors);
                 case 2 -> listGameFiles();
                 case 3 -> listPlayerGames();
                 case 4 -> viewGameRules();
             }
         } while (options != 0);
+        if (partidaActual != null) {
+            // Previously part of playTheGame method, moved here to update file only on exit
+            FileUtils.savePlayers(dadesJugadors);
+            FileUtils.guardarPartidaEnHistoric(partidaActual.getPlayerName(Game.PLAYER), partidaActual.getTorns(), partidaActual.getWinner());
+        }
+
+
     }
 
     private void viewGameRules() {
-         int option = UtilsES.getInteger("""
+        int option = UtilsES.getInteger("""
                 **********************************************************************
                 | 0. ROCK PAPER SCISSORS \t|\t1. ROCK PAPER SCISSORS LIZARD SPOCK |
                 **********************************************************************
                 """, "Wrong option, try again!", 0, 1);
-         switch(option){
-             case 0 -> System.out.println(RPS_RULES);
-             case 1 -> System.out.println(RPSLS_RULES);
-         }
-         UtilsES.nextGame();
+        switch (option) {
+            case 0 -> System.out.println(RPS_RULES);
+            case 1 -> System.out.println(RPSLS_RULES);
+        }
+        UtilsES.nextGame();
     }
 
-    void playTheGame(String[][] dadesJugadors) {
+    GameData playTheGame(String[][] dadesJugadors) {
         UtilsES.showTitle("GAME CONFIGURATION");
         String nom = UtilsES.getName("What's your name? ");
+        GameData partidaActual = null;
         int posicio = isValidPlayer(nom, dadesJugadors);
         if (posicio != -1) {
             Game partida;
@@ -97,16 +105,12 @@ public class AppEAC5P3 {
             int joc = chooseGameMenu();
             UtilsES.showTitle("LET'S GO!");
             partida = (joc == 0) ? new RockPaperScissors() : new RockPaperScissorsSpockLizard();
-            GameData partidaActual = partida.createGameData(nom, tornsPartida, partida.getGameType(joc));
+            partidaActual = partida.createGameData(nom, tornsPartida, partida.getGameType(joc));
             partida.playGame(partidaActual);
             UtilsES.showGameWinner(partidaActual);
-            UtilsES.updateScore(partidaActual.getWinner(), posicio, dadesJugadors);
-            UtilsES.showScore(posicio, dadesJugadors);
-            // Only update files when a new game has been played
-            FileUtils.savePlayers(dadesJugadors);
-            FileUtils.guardarPartidaEnHistoric(nom, partidaActual.getTorns(), partidaActual.getWinner());
             UtilsES.nextGame();
         }
+        return partidaActual;
     }
 
     void listGameFiles() {
