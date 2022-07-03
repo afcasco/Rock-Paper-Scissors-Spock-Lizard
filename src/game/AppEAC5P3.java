@@ -26,7 +26,7 @@ public class AppEAC5P3 {
                 - Scissors cuts paper.
                 - Paper covers rock.
                 - Rock crushes lizard.
-                - Lizard poisons Spock..
+                - Lizard poisons Spock.
                 - Spock smashes scissors.
                 - Scissors decapitates lizard.
                 - Lizard eats paper.
