@@ -27,19 +27,29 @@ public class AppEAC5P3 {
 
     void start() {
 
-        FileUtils.inicialitza();
+        //*+
+        // I dont know why someone would use a method just for that...
+        // FileUtils.inicialitza();
 
         /*
         Names and scores array to be removed later, just used for testing purposes
          */
-        String[][] dadesJugadors = {{"Adria", "5"}, {"Agnes", "0"}, {"Anna", "3"}, {"Arnau", "2"}, {"Beth", "9"},
-                {"Blanca", "6"}, {"Bruna", "1"}, {"Carla", "7"}, {"Cesc", "0"}, {"Clara", "5"}, {"Duna", "2"},
-                {"Laia", "4"}, {"Eloi", "3"}, {"Emma", "6"}, {"Gerard", "8"}, {"Guillem", "5"}, {"Lluc", "7"},
-                {"Jordi", "1"}, {"Martí", "5"}, {"Max", "3"}, {"Neus", "6"}, {"Nico", "2"}, {"Nina", "1"},
-                {"Noa", "6"}, {"Nora", "1"}, {"Nuria", "8"}, {"Oriol", "6"}, {"Pau", "1"}, {"Paula", "9"},
-                {"Pep", "0"}, {"Pol", "10"}, {"Queralt", "3"}, {"Quim", "1"}, {"Rita", "7"}, {"Roc", "8"},
-                {"Roger", "9"}, {"Sergi", "3"}, {"Txell", "1"}, {"Xavi", "9"}, {"Alex", "4"}, {"Èlia", "0"},
-                {"Èric", "6"}, {"", ""}, {"", ""}};
+        String [][] dadesJugadors = {
+                {"", ""}, {"", ""}, {"", ""},{"", ""},
+                {"", ""}, {"", ""}, {"", ""},{"", ""},
+                {"", ""}, {"", ""}, {"", ""},{"", ""},
+                {"", ""}, {"", ""}, {"", ""},{"", ""},
+                {"", ""}, {"", ""}, {"", ""},{"", ""},
+                {"", ""}, {"", ""}, {"", ""},{"", ""},
+                {"", ""}, {"", ""}, {"", ""},{"", ""},
+                {"", ""}, {"", ""}, {"", ""},{"", ""},
+                {"", ""}, {"", ""}, {"", ""},{"", ""},
+                {"", ""}, {"", ""}, {"", ""},{"", ""}
+
+        };
+
+        //Load players from file if it exists otherwise return empty array
+        FileUtils.loadPlayers(dadesJugadors);
 
         int keepPlaying = userWantsToPlay();
         while (keepPlaying != 0) {
@@ -72,12 +82,18 @@ public class AppEAC5P3 {
         }
     }
 
-    void listGameFiles() {
-        System.out.println("llistant fitxers de partides....");
+    void listGameFiles(){
+        UtilsES.showTitle("SAVE PLAYER FILES");
+        String[][] games = FileUtils.getGameFiles();
+        for (String[] game : games) {
+            System.out.println("Name: " + game[0] + "\t" + "Size: " + game[1]);
+        }
+        UtilsES.nextGame();
     }
 
     void listPlayerGames() {
         System.out.println("llistant partides d'un jugador...");
+        UtilsES.nextGame();
     }
 
     int cercaPosJugador(String nom, String[][] dadesJugadors) {
