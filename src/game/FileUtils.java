@@ -55,18 +55,18 @@ public final class FileUtils {
             try (Scanner input = new Scanner(players)) {
                 String temp;
                 int pos = 0;
-                boolean stop = false;
-                while (input.hasNextLine() && !stop) {
+                while (input.hasNextLine()) {
                     temp = input.nextLine();
                     if (!temp.equals(",")) {
                         dadesJugadors[pos] = temp.split(",");
                     } else {
-                        stop = true;
+                        dadesJugadors[pos][0]="";
+                        dadesJugadors[pos][1]="";
                     }
                     pos++;
                 }
             } catch (Exception e) {
-
+                e.printStackTrace();
             }
         }
         return dadesJugadors;
@@ -79,9 +79,8 @@ public final class FileUtils {
             raf.seek(raf.length());
             raf.writeInt(numJugades);
             raf.writeInt(resultat);
-            System.out.println("test if it makes it here");
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("NO GAME FILE TO LOAD");
         }
     }
 

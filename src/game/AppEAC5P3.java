@@ -1,14 +1,38 @@
 package game;
 
+/**
+ * Play the classic game Rock Paper Scissors against the CPU, as well
+ * as the extended version Rock Paper Scissors Lizard Spock
+ */
 public class AppEAC5P3 {
 
-    private static final String PLAYER_OPTIONS = "1. PLAY%n2. Llista de fitxers de partides%n3. Partides d'un jugador%n0. EXIT%n";
+    private static final String PLAYER_OPTIONS = "1. PLAY%n2. Llista de fitxers de partides%"+
+                                                 "n3. Partides d'un jugador%n4. View Rules%n0. EXIT%n";
     private static final String PUNTUACIO_INICIAL = "0";
     private static final int MAX_PLAYERS = 40;
     private static final int DATA_FIELDS = 2;
     private static final String NO_MORE_SPACE_ERROR = """
                          NO QUEDA ESPAI PER REGISTRAR MES JUGADORS
                                    PERO ELS JUGADORS EXISTENTS ENCARA PODEN JUGAR
+            """;
+    private static final String RPS_RULES = """
+             *ROCK PAPER SCISSORS RULES:
+                - Rock wins against scissors.
+                - Scissors win against paper.
+                - Paper wins against rock.
+            """;
+    private static final String RPSLS_RULES = """
+             * ROCK PAPER SCISSORS LIZARD SPOCK RULES
+                - Scissors cuts paper.
+                - Paper covers rock.
+                - Rock crushes lizard.
+                - Lizard poisons Spock.
+                - Spock smashes scissors.
+                - Scissors decapitates lizard.
+                - Lizard eats paper.
+                - Paper disproves Spock.
+                - Spock vaporizes rock.
+                - Rock crushes scissors.
             """;
     private static final String GAME_TITLE = """
             ____   ___   ____ _  __   ____   _    ____  _____ ____     ____   ____ ___ ____ ____   ___  ____  ____ \s
@@ -44,8 +68,22 @@ public class AppEAC5P3 {
                 case 1 -> playTheGame(dadesJugadors);
                 case 2 -> listGameFiles();
                 case 3 -> listPlayerGames();
+                case 4 -> viewGameRules();
             }
         } while (options != 0);
+    }
+
+    private void viewGameRules() {
+         int option = UtilsES.getInteger("""
+                **********************************************************************
+                | 0. ROCK PAPER SCISSORS \t|\t1. ROCK PAPER SCISSORS LIZARD SPOCK |
+                **********************************************************************
+                """, "Wrong option, try again!", 0, 1);
+         switch(option){
+             case 0 -> System.out.println(RPS_RULES);
+             case 1 -> System.out.println(RPSLS_RULES);
+         }
+         UtilsES.nextGame();
     }
 
     void playTheGame(String[][] dadesJugadors) {
@@ -131,7 +169,7 @@ public class AppEAC5P3 {
      */
     int getUserMenuOption() {
         UtilsES.showTitle(GAME_TITLE);
-        return UtilsES.getInteger(PLAYER_OPTIONS, "Escull una opcio valida. (%d o %d)%n", 0, 3);
+        return UtilsES.getInteger(PLAYER_OPTIONS, "Escull una opcio valida. (%d o %d)%n", 0, 4);
     }
 
     int chooseGameMenu() {
