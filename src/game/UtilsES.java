@@ -97,4 +97,15 @@ final class UtilsES {
         System.out.println("Press [ENTER] to continue...");
         input.nextLine();
     }
+
+    static String[][] initializeEmptyArray(int rows, int cols) {
+        String[][] dadesJugadors = new String[rows][cols];
+        for (int i = 0; i < dadesJugadors.length; i++) {
+            for (int j = 0; j < 2; j++) {
+                dadesJugadors[i][j] = "";
+            }
+        }
+        return dadesJugadors;
+    }
+
 }

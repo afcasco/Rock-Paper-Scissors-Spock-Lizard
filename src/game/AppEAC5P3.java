@@ -2,7 +2,10 @@ package game;
 
 public class AppEAC5P3 {
 
+    private static final String PLAYER_OPTIONS = "1. PLAY%n2. Llista de fitxers de partides%n3. Partides d'un jugador%n0. EXIT%n";
     private static final String PUNTUACIO_INICIAL = "0";
+    private static final int MAX_PLAYERS = 40;
+    private static final int DATA_FIELDS = 2;
     private static final String NO_MORE_SPACE_ERROR = """
                          NO QUEDA ESPAI PER REGISTRAR MES JUGADORS
                                    PERO ELS JUGADORS EXISTENTS ENCARA PODEN JUGAR
@@ -27,30 +30,16 @@ public class AppEAC5P3 {
 
     void start() {
 
+        // Checks for (or creates) data directory structure
         FileUtils.inicialitza();
-        /*
-        Names and scores array to be removed later, just used for testing purposes
-         */
-        String[][] dadesJugadors = {
-                {"", ""}, {"", ""}, {"", ""}, {"", ""},
-                {"", ""}, {"", ""}, {"", ""}, {"", ""},
-                {"", ""}, {"", ""}, {"", ""}, {"", ""},
-                {"", ""}, {"", ""}, {"", ""}, {"", ""},
-                {"", ""}, {"", ""}, {"", ""}, {"", ""},
-                {"", ""}, {"", ""}, {"", ""}, {"", ""},
-                {"", ""}, {"", ""}, {"", ""}, {"", ""},
-                {"", ""}, {"", ""}, {"", ""}, {"", ""},
-                {"", ""}, {"", ""}, {"", ""}, {"", ""},
-                {"", ""}, {"", ""}, {"", ""}, {"", ""}
+        // Loads players from file
+        String[][] dadesJugadors = FileUtils.loadPlayers();
+        // if no file is found, generates a working 40*2 array to store data
+        if (dadesJugadors == null) dadesJugadors = UtilsES.initializeEmptyArray(MAX_PLAYERS, DATA_FIELDS);
 
-        };
-
-        //Load players from file if it exists otherwise return empty array
-        FileUtils.loadPlayers(dadesJugadors);
         int options;
-
         do {
-            options = getUserOption();
+            options = getUserMenuOption();
             switch (options) {
                 case 1 -> playTheGame(dadesJugadors);
                 case 2 -> listGameFiles();
@@ -58,7 +47,6 @@ public class AppEAC5P3 {
             }
         } while (options != 0);
     }
-
 
     void playTheGame(String[][] dadesJugadors) {
         UtilsES.showTitle("GAME CONFIGURATION");
@@ -68,7 +56,7 @@ public class AppEAC5P3 {
             Game partida;
             int tornsPartida = UtilsES.getRounds();
             UtilsES.separadorLinies();
-            int joc = chooseGame();
+            int joc = chooseGameMenu();
             UtilsES.showTitle("LET'S GO!");
             partida = (joc == 0) ? new RockPaperScissors() : new RockPaperScissorsSpockLizard();
             GameData partidaActual = partida.createGameData(nom, tornsPartida, partida.getGameType(joc));
@@ -76,6 +64,9 @@ public class AppEAC5P3 {
             UtilsES.showGameWinner(partidaActual);
             UtilsES.updateScore(partidaActual.getWinner(), posicio, dadesJugadors);
             UtilsES.showScore(posicio, dadesJugadors);
+            // Only update files when a new game has been played
+            FileUtils.savePlayers(dadesJugadors);
+            FileUtils.guardarPartidaEnHistoric(nom, partidaActual.getTorns(), partidaActual.getWinner());
             UtilsES.nextGame();
         }
     }
@@ -88,7 +79,7 @@ public class AppEAC5P3 {
                 System.out.println("Name: " + game[0] + "\t" + "Size: " + game[1]);
             }
         } else {
-            System.out.println("NO GAME FILES FOUND");
+            System.out.println("NO GAME FILE FOUND");
         }
         UtilsES.nextGame();
     }
@@ -101,7 +92,7 @@ public class AppEAC5P3 {
                 System.out.println(i + "\t" + playerHistory[i][0] + "\t" + playerHistory[i][1]);
             }
         } else {
-            System.out.println("Player file not found ");
+            System.out.println("Game file not found for player " + playerName.toUpperCase());
         }
         UtilsES.nextGame();
     }
@@ -138,13 +129,12 @@ public class AppEAC5P3 {
     Retorna true quan l'usuari entra 1, i fals quan l'usuari entra 0
     Qualsevol altre valor introduit mostra error i torna a començar
      */
-    int getUserOption() {
+    int getUserMenuOption() {
         UtilsES.showTitle(GAME_TITLE);
-        return UtilsES.getInteger("1. PLAY%n2. Llista de fitxers de partides%n" +
-                                  "3. Partides d'un jugador%n0. EXIT%n", "Escull una opcio valida. (%d o %d)%n", 0, 3);
+        return UtilsES.getInteger(PLAYER_OPTIONS, "Escull una opcio valida. (%d o %d)%n", 0, 3);
     }
 
-    int chooseGame() {
+    int chooseGameMenu() {
         return UtilsES.getInteger("""
                 **********************************************************************
                 | 0. ROCK PAPER SCISSORS \t|\t1. ROCK PAPER SCISSORS LIZARD SPOCK |
@@ -162,4 +152,5 @@ public class AppEAC5P3 {
         }
         return posicio;
     }
+
 }

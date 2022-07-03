@@ -1,6 +1,7 @@
 package game;
 
 import java.io.File;
+import java.io.PrintStream;
 import java.io.RandomAccessFile;
 import java.util.Scanner;
 
@@ -16,52 +17,41 @@ public final class FileUtils {
     private FileUtils() {
     }
 
+    // Create data and games folders if not found in working directory
     static void inicialitza() {
         File file = new File(BASE_FOLDER);
-        System.out.println("Data folder set to: " + file);
-        if (!file.exists()) {
-            System.out.println("Data not found, creating data folder...");
-            file.mkdir();
-        } else {
-            System.out.println("Data folder found!");
-        }
+        if (!file.exists()) file.mkdir();
         File games = new File(GAMES_FOLDER);
-        if (!games.exists()) {
-            System.out.println("Creating games folder");
-            games.mkdir();
-        } else {
-            System.out.println("Previous game data found!");
-        }
+        if (!games.exists()) games.mkdir();
     }
 
     static String[][] getGameFiles() {
         File gamesFolder = new File(GAMES_FOLDER);
+        String[][] logFiles = null;
         File[] filesInfolder = gamesFolder.listFiles();
         if (filesInfolder != null) {
-            String[][] logFiles = new String[filesInfolder.length][2];
-
+            logFiles = new String[filesInfolder.length][2];
             // Loop a tot el contingut del directori
             for (int i = 0; i < filesInfolder.length; i++) {
                 long mida = filesInfolder[i].length();
                 logFiles[i][FILE_NAME] = filesInfolder[i].getName();
                 logFiles[i][FILE_SIZE] = Long.toString(mida);
             }
-
-            return logFiles;
-        } else {
-            return null;
         }
-
+        return logFiles;
     }
 
     /**
-     * @param dadesJugadors array 40*2 first field player name, second fiel number of wins
-     *                      returns array with players loaded from PLAYER_LIST file (do nothing
-     *                      if it can't find the file to load from)
+     * array 40*2 first field player name, second fiel number of wins
+     * returns array with players loaded from PLAYER_LIST file (do nothing
+     * if it can't find the file to load from)
      */
-    static void loadPlayers(String[][] dadesJugadors) {
+    static String[][] loadPlayers() {
+
+        String[][] dadesJugadors = null;
         File players = new File(PLAYER_LIST);
         if (players.exists()) {
+            dadesJugadors = new String[40][2];
             try (Scanner input = new Scanner(players)) {
                 String temp;
                 int pos = 0;
@@ -76,14 +66,23 @@ public final class FileUtils {
                     pos++;
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+
             }
         }
+        return dadesJugadors;
     }
 
     static void guardarPartidaEnHistoric(String nomJugador, int numJugades, int resultat) {
-
-
+        try {
+            File ruta = new File(GAMES_FOLDER + File.separator + nomJugador + ".log");
+            RandomAccessFile raf = new RandomAccessFile(ruta, "rw");
+            raf.seek(raf.length());
+            raf.writeInt(numJugades);
+            raf.writeInt(resultat);
+            System.out.println("test if it makes it here");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static int[][] getPlayerHistory(String nomJugador) {
@@ -108,8 +107,16 @@ public final class FileUtils {
         return resultat;
     }
 
-
     static void savePlayers(String[][] players) {
-
+        File fitxersJugadors = new File(PLAYER_LIST);
+        try {
+            PrintStream writer = new PrintStream(fitxersJugadors);
+            for (String[] player : players) {
+                writer.println(player[0] + "," + player[1]);
+            }
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
