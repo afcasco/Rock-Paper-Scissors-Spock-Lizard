@@ -3,6 +3,8 @@ package game;
 import java.util.Scanner;
 
 final class UtilsES {
+
+    private static final String CONTINUE_MESSAGE = "\nPress [ENTER] to continue...";
     private UtilsES() {
         //final class with private constructor to avoid inheritance and make it non instantiable
     }
@@ -43,8 +45,9 @@ final class UtilsES {
         return entrada;
     }
 
-    static String getName() {
-        System.out.println("What's your name? ");
+
+    static String getName(String message) {
+        System.out.println(message);
         Scanner input = new Scanner(System.in);
         return input.next();
     }
@@ -93,7 +96,18 @@ final class UtilsES {
     //input slips into next round causing exception when scanner reads values
     static void nextGame() {
         Scanner input = new Scanner(System.in);
-        System.out.println("Press [ENTER] to continue...");
+        System.out.println(CONTINUE_MESSAGE);
         input.nextLine();
     }
+
+    static String[][] initializeEmptyArray(int rows, int cols) {
+        String[][] dadesJugadors = new String[rows][cols];
+        for (int i = 0; i < dadesJugadors.length; i++) {
+            for (int j = 0; j < 2; j++) {
+                dadesJugadors[i][j] = "";
+            }
+        }
+        return dadesJugadors;
+    }
+
 }
