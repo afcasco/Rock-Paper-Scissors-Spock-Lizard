@@ -33,7 +33,7 @@ abstract class Game {
             if (guanya == 2) {
                 System.out.println("Aquest torn hi ha hagut EMPAT");
             } else {
-                System.out.println("Aquest torn guanya: " + game.getPlayerName(guanya));
+                System.out.println("Aquest torn guanya: " + game.getJugadors(guanya));
             }
         }
     }

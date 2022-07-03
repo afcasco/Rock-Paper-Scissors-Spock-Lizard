@@ -27,7 +27,7 @@ class GameData {
         resultat[Game.CPU]++;
     }
 
-    String getPlayerName(int index) {
+    String getJugadors(int index) {
         return jugadors[index];
     }
 
