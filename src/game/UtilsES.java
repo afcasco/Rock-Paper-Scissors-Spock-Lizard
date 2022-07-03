@@ -43,8 +43,9 @@ final class UtilsES {
         return entrada;
     }
 
-    static String getName() {
-        System.out.println("What's your name? ");
+
+    static String getName(String message) {
+        System.out.println(message);
         Scanner input = new Scanner(System.in);
         return input.next();
     }

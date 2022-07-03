@@ -47,28 +47,28 @@ public class AppEAC5P3 {
 
         //Load players from file if it exists otherwise return empty array
         FileUtils.loadPlayers(dadesJugadors);
+        int options;
 
-        int keepPlaying;
         do {
-            keepPlaying = getUserOption();
-            switch (keepPlaying) {
+            options = getUserOption();
+            switch (options) {
                 case 1 -> playTheGame(dadesJugadors);
                 case 2 -> listGameFiles();
                 case 3 -> listPlayerGames();
             }
-        } while (keepPlaying != 0);
+        } while (options != 0);
     }
 
 
     void playTheGame(String[][] dadesJugadors) {
         UtilsES.showTitle("GAME CONFIGURATION");
-        String nom = UtilsES.getName();
-        int posicio = esJugadorValid(nom, dadesJugadors);
+        String nom = UtilsES.getName("What's your name? ");
+        int posicio = isValidPlayer(nom, dadesJugadors);
         if (posicio != -1) {
             Game partida;
             int tornsPartida = UtilsES.getRounds();
             UtilsES.separadorLinies();
-            int joc = escollirJoc();
+            int joc = chooseGame();
             UtilsES.showTitle("LET'S GO!");
             partida = (joc == 0) ? new RockPaperScissors() : new RockPaperScissorsSpockLizard();
             GameData partidaActual = partida.createGameData(nom, tornsPartida, partida.getGameType(joc));
@@ -94,11 +94,19 @@ public class AppEAC5P3 {
     }
 
     void listPlayerGames() {
-        System.out.println("llistant partides d'un jugador...");
+        String playerName = UtilsES.getName("Enter a player name to show his/her game history...");
+        int[][] playerHistory = FileUtils.getPlayerHistory(playerName);
+        if (playerHistory != null) {
+            for (int i = 0; i < playerHistory.length; i++) {
+                System.out.println(i + "\t" + playerHistory[i][0] + "\t" + playerHistory[i][1]);
+            }
+        } else {
+            System.out.println("Player file not found ");
+        }
         UtilsES.nextGame();
     }
 
-    int cercaPosJugador(String nom, String[][] dadesJugadors) {
+    int findPlayerPosition(String nom, String[][] dadesJugadors) {
         boolean trobat = false;
         int i = 0;
         while (!trobat && i < dadesJugadors.length) {
@@ -111,7 +119,7 @@ public class AppEAC5P3 {
         return trobat ? i : -1;
     }
 
-    int enregistrarNouJugador(String nom, String[][] dadesJugadors) {
+    int recordNewPlayer(String nom, String[][] dadesJugadors) {
         boolean espaiBuit = false;
         int i = 0;
         while (!espaiBuit && i < dadesJugadors.length) {
@@ -136,16 +144,18 @@ public class AppEAC5P3 {
                                   "3. Partides d'un jugador%n0. EXIT%n", "Escull una opcio valida. (%d o %d)%n", 0, 3);
     }
 
-    int escollirJoc() {
+    int chooseGame() {
         return UtilsES.getInteger("""
-                || 0. ROCK PAPER SCISSORS\t||\t1. ROCK PAPER SCISSORS LIZARD SPOCK ||
+                **********************************************************************
+                | 0. ROCK PAPER SCISSORS \t|\t1. ROCK PAPER SCISSORS LIZARD SPOCK |
+                **********************************************************************
                 """, "Wrong option, try again!", 0, 1);
     }
 
-    int esJugadorValid(String nom, String[][] dadesJugadors) {
-        int posicio = cercaPosJugador(nom, dadesJugadors);
+    int isValidPlayer(String nom, String[][] dadesJugadors) {
+        int posicio = findPlayerPosition(nom, dadesJugadors);
         if (posicio == -1) {
-            posicio = enregistrarNouJugador(nom, dadesJugadors);
+            posicio = recordNewPlayer(nom, dadesJugadors);
         }
         if (posicio == -1) {
             UtilsES.showErrorMessage(NO_MORE_SPACE_ERROR);

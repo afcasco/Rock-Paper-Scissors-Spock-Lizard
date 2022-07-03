@@ -1,6 +1,7 @@
 package game;
 
 import java.io.File;
+import java.io.RandomAccessFile;
 import java.util.Scanner;
 
 
@@ -36,7 +37,7 @@ public final class FileUtils {
     static String[][] getGameFiles() {
         File gamesFolder = new File(GAMES_FOLDER);
         File[] filesInfolder = gamesFolder.listFiles();
-        if(filesInfolder!=null){
+        if (filesInfolder != null) {
             String[][] logFiles = new String[filesInfolder.length][2];
 
             // Loop a tot el contingut del directori
@@ -85,12 +86,30 @@ public final class FileUtils {
 
     }
 
-    static int[][] getHistoricJugador(String nomJugador) {
-        return new int[0][0];
+    public static int[][] getPlayerHistory(String nomJugador) {
 
+        int rows;
+        int[][] resultat = null;
+
+        try {
+            File ruta = new File(GAMES_FOLDER + File.separator + nomJugador + ".log");
+            RandomAccessFile raf = new RandomAccessFile(ruta, "r");
+            rows = (int) (raf.length() / 8);
+            resultat = new int[rows][2];
+            int pos = 0;
+            while (pos < rows) {
+                resultat[pos][0] = raf.readInt();
+                resultat[pos][1] = raf.readInt();
+                pos++;
+            }
+        } catch (Exception e) {
+            System.out.println("ERROR: ");
+        }
+        return resultat;
     }
 
-    static void savePlayers(String[][] players){
+
+    static void savePlayers(String[][] players) {
 
     }
 }
