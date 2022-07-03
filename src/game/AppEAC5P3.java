@@ -6,7 +6,7 @@ package game;
  */
 public class AppEAC5P3 {
 
-    private static final String PLAYER_OPTIONS = "1. PLAY%n2. Llista de fitxers de partides%"+
+    private static final String PLAYER_OPTIONS = "1. PLAY%n2. Llista de fitxers de partides%" +
                                                  "n3. Partides d'un jugador%n4. View Rules%n0. EXIT%n";
     private static final String PUNTUACIO_INICIAL = "0";
     private static final int MAX_PLAYERS = 40;
@@ -74,16 +74,16 @@ public class AppEAC5P3 {
     }
 
     private void viewGameRules() {
-         int option = UtilsES.getInteger("""
+        int option = UtilsES.getInteger("""
                 **********************************************************************
                 | 0. ROCK PAPER SCISSORS \t|\t1. ROCK PAPER SCISSORS LIZARD SPOCK |
                 **********************************************************************
                 """, "Wrong option, try again!", 0, 1);
-         switch(option){
-             case 0 -> System.out.println(RPS_RULES);
-             case 1 -> System.out.println(RPSLS_RULES);
-         }
-         UtilsES.nextGame();
+        switch (option) {
+            case 0 -> System.out.println(RPS_RULES);
+            case 1 -> System.out.println(RPSLS_RULES);
+        }
+        UtilsES.nextGame();
     }
 
     void playTheGame(String[][] dadesJugadors) {
