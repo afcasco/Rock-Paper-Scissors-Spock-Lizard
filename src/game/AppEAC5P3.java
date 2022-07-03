@@ -48,16 +48,17 @@ public class AppEAC5P3 {
         //Load players from file if it exists otherwise return empty array
         FileUtils.loadPlayers(dadesJugadors);
 
-        int keepPlaying = userWantsToPlay();
-        while (keepPlaying != 0) {
+        int keepPlaying;
+        do {
+            keepPlaying = getUserOption();
             switch (keepPlaying) {
                 case 1 -> playTheGame(dadesJugadors);
                 case 2 -> listGameFiles();
-                default -> listPlayerGames();
+                case 3 -> listPlayerGames();
             }
-            keepPlaying = userWantsToPlay();
-        }
+        } while (keepPlaying != 0);
     }
+
 
     void playTheGame(String[][] dadesJugadors) {
         UtilsES.showTitle("GAME CONFIGURATION");
@@ -129,7 +130,7 @@ public class AppEAC5P3 {
     Retorna true quan l'usuari entra 1, i fals quan l'usuari entra 0
     Qualsevol altre valor introduit mostra error i torna a començar
      */
-    int userWantsToPlay() {
+    int getUserOption() {
         UtilsES.showTitle(GAME_TITLE);
         return UtilsES.getInteger("1. PLAY%n2. Llista de fitxers de partides%n" +
                                   "3. Partides d'un jugador%n0. EXIT%n", "Escull una opcio valida. (%d o %d)%n", 0, 3);
