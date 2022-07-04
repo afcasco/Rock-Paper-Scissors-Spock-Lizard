@@ -1,4 +1,4 @@
-# rockPaperScissorsSpockLizard
+# ROCK PAPER SCISSORS (LIZARD SPOCK)
 
 SMALL JAVA CONSOLE GAME:
 
