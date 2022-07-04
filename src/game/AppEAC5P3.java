@@ -6,8 +6,7 @@ package game;
  */
 public class AppEAC5P3 {
 
-    private static final String PLAYER_OPTIONS = "1. PLAY%n2. LIST LOG FILES%"+
-                                                 "n3. VIEW PLAYER HISTORY%n4. SHOW RULES%n0. EXIT%n";
+    private static final String PLAYER_OPTIONS = "1. PLAY%n2. LIST LOG FILES%" + "n3. VIEW PLAYER HISTORY%n4. SHOW RULES%n0. EXIT%n";
     private static final String PUNTUACIO_INICIAL = "0";
     private static final int MAX_PLAYERS = 40;
     private static final int DATA_FIELDS = 2;
@@ -52,7 +51,7 @@ public class AppEAC5P3 {
         app.start();
     }
 
-     public void start() {
+    public void start() {
 
         // Checks for (or creates) data directory structure
         FileUtils.inicialitza();
@@ -77,25 +76,23 @@ public class AppEAC5P3 {
      * Show rock paper scissors and rock paper scissors lizard spock rules
      */
     public void viewGameRules() {
-         int option = UtilsES.getInteger("""
+        int option = UtilsES.getInteger("""
                 **********************************************************************
                 | 0. ROCK PAPER SCISSORS \t|\t1. ROCK PAPER SCISSORS LIZARD SPOCK |
                 **********************************************************************
                 """, "Wrong option, try again!", 0, 1);
-         switch(option){
-             case 0 -> System.out.println(RPS_RULES);
-             case 1 -> System.out.println(RPSLS_RULES);
-         }
-         UtilsES.nextGame();
+        switch (option) {
+            case 0 -> System.out.println(RPS_RULES);
+            case 1 -> System.out.println(RPSLS_RULES);
+        }
+        UtilsES.nextGame();
     }
 
     /**
-     *
      * @param dadesJugadors Array with loaded players from disk, if there's no players to load
      *                      it's passed as an empty array that will fit 40 players and their score
-     * this method will ask for the players name, how many rounds of the game he/she wants to play
+     *                      this method will ask for the players name, how many rounds of the game he/she wants to play
      *                      and what variation, it will play all the rounds player vs cpu random bets
-     *
      */
     public void playTheGame(String[][] dadesJugadors) {
         UtilsES.showTitle("GAME CONFIGURATION");
@@ -130,7 +127,7 @@ public class AppEAC5P3 {
             System.out.println("FILE \t\t SIZE (bytes)");
             UtilsES.separadorLinies();
             for (String[] game : games) {
-                System.out.println(game[0] + "\t\t"  + game[1]);
+                System.out.println(game[0] + "\t\t" + game[1]);
             }
         } else {
             System.out.println("NO GAME FILE FOUND");
@@ -146,12 +143,12 @@ public class AppEAC5P3 {
         int[][] playerHistory = FileUtils.getPlayerHistory(playerName);
         if (playerHistory != null) {
             UtilsES.separadorLinies();
-            System.out.println("Game list for player: "+playerName.toUpperCase());
+            System.out.println("Game list for player: " + playerName.toUpperCase());
             UtilsES.separadorLinies();
-            System.out.println("GAME#"+"\t"+"ROUNDS"+"\t"+"WINNER");
+            System.out.println("GAME#" + "\t" + "ROUNDS" + "\t" + "WINNER");
             UtilsES.separadorLinies();
             for (int i = 0; i < playerHistory.length; i++) {
-                System.out.println(i+1 + "\t\t" + playerHistory[i][0] + "\t\t" + Game.OUTCOMES[playerHistory[i][1]]);
+                System.out.println(i + 1 + "\t\t" + playerHistory[i][0] + "\t\t" + Game.OUTCOMES[playerHistory[i][1]]);
             }
         } else {
             System.out.println("Game file not found for player " + playerName.toUpperCase());
@@ -160,8 +157,7 @@ public class AppEAC5P3 {
     }
 
     /**
-     *
-     * @param name name of the player to locate in playerData
+     * @param name       name of the player to locate in playerData
      * @param playerData array of players
      * @return returns position of player {name} in {playerData} or {-1} if it's not found
      */
@@ -179,8 +175,7 @@ public class AppEAC5P3 {
     }
 
     /**
-     *
-     * @param name name of the player to record in playerData
+     * @param name       name of the player to record in playerData
      * @param playerData array of player names and score
      * @return position where {name} was recorded or {-1} if array was full and recording failed
      */
@@ -200,7 +195,6 @@ public class AppEAC5P3 {
     }
 
     /**
-     *
      * @return option choosen by user
      */
     public int getUserMenuOption() {
@@ -209,7 +203,6 @@ public class AppEAC5P3 {
     }
 
     /**
-     *
      * @return type of game to be played
      */
     public int chooseGameMenu() {
