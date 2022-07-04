@@ -6,8 +6,44 @@ abstract class Game {
     final static int CPU = 0;
     final static int PLAYER = 1;
     final static int DRAW = 2;
+    final static String[] OUTCOMES = {"CPU", "Player", "Draw"};
     private final static String[] GAME_TYPE = {"ROCK/PAPER/SCISSORS", "ROCK/PAPER/SCISSORS & LIZARD SPOCK"};
     private final static String[] BETS_POOL = {"PEDRA", "PAPER", "TISSORES", "SPOCK", "LLANGARDAIX"};
+    private static final String RPS_RULES = """
+             *ROCK PAPER SCISSORS RULES:
+                - Rock wins against scissors.
+                - Scissors win against paper.
+                - Paper wins against rock.
+            """;
+    private static final String RPSLS_RULES = """
+             * ROCK PAPER SCISSORS LIZARD SPOCK RULES
+                - Scissors cuts paper.
+                - Paper covers rock.
+                - Rock crushes lizard.
+                - Lizard poisons Spock.
+                - Spock smashes scissors.
+                - Scissors decapitates lizard.
+                - Lizard eats paper.
+                - Paper disproves Spock.
+                - Spock vaporizes rock.
+                - Rock crushes scissors.
+            """;
+
+    /**
+     * Show rock paper scissors and rock paper scissors lizard spock rules
+     */
+    static void viewGameRules() {
+        int option = UtilsES.getInteger("""
+                **********************************************************************
+                | 0. ROCK PAPER SCISSORS \t|\t1. ROCK PAPER SCISSORS LIZARD SPOCK |
+                **********************************************************************
+                """, "Wrong option, try again!", 0, 1);
+        switch (option) {
+            case 0 -> System.out.println(RPS_RULES);
+            case 1 -> System.out.println(RPSLS_RULES);
+        }
+        UtilsES.nextGame();
+    }
 
     /*
     Crea una partida pel jugador i jugades passats per parametre
@@ -39,7 +75,7 @@ abstract class Game {
     }
 
     /**
-     * @param cpuBet aposta autogenerada per CPU
+     * @param cpuBet    aposta autogenerada per CPU
      * @param playerBet aposta jugador
      * @return guanyador del joc (funciona per pedra/paper/tissores i per l'extensio
      * pedra/paper/tissores/llangardaix/spock

@@ -6,8 +6,8 @@ package game;
  */
 public class AppEAC5P3 {
 
-    private static final String PLAYER_OPTIONS = "1. PLAY%n2. Llista de fitxers de partides%"+
-                                                 "n3. Partides d'un jugador%n4. View Rules%n0. EXIT%n";
+    private static final String PLAYER_OPTIONS = "1. PLAY%n2. LIST LOG FILES%"+
+                                                 "n3. VIEW PLAYER HISTORY%n4. SHOW RULES%n0. EXIT%n";
     private static final String PUNTUACIO_INICIAL = "0";
     private static final int MAX_PLAYERS = 40;
     private static final int DATA_FIELDS = 2;
@@ -127,8 +127,10 @@ public class AppEAC5P3 {
         String[][] games = FileUtils.getGameFiles();
         if (games != null) {
             UtilsES.showTitle("SAVED PLAYER FILES");
+            System.out.println("FILE \t\t SIZE (bytes)");
+            UtilsES.separadorLinies();
             for (String[] game : games) {
-                System.out.println("Name: " + game[0] + "\t" + "Size: " + game[1]);
+                System.out.println(game[0] + "\t\t"  + game[1]);
             }
         } else {
             System.out.println("NO GAME FILE FOUND");
@@ -143,8 +145,13 @@ public class AppEAC5P3 {
         String playerName = UtilsES.getName("Enter a player name to show his/her game history...");
         int[][] playerHistory = FileUtils.getPlayerHistory(playerName);
         if (playerHistory != null) {
+            UtilsES.separadorLinies();
+            System.out.println("Game list for player: "+playerName.toUpperCase());
+            UtilsES.separadorLinies();
+            System.out.println("GAME#"+"\t"+"ROUNDS"+"\t"+"WINNER");
+            UtilsES.separadorLinies();
             for (int i = 0; i < playerHistory.length; i++) {
-                System.out.println(i + "\t" + playerHistory[i][0] + "\t" + playerHistory[i][1]);
+                System.out.println(i+1 + "\t\t" + playerHistory[i][0] + "\t\t" + Game.OUTCOMES[playerHistory[i][1]]);
             }
         } else {
             System.out.println("Game file not found for player " + playerName.toUpperCase());
