@@ -71,14 +71,11 @@ public final class FileUtils {
         } else {
             return null;
         }
-
-
     }
 
     static void guardarPartidaEnHistoric(String nomJugador, int numJugades, int resultat) {
-        try {
-            File ruta = new File(GAMES_FOLDER + File.separator + nomJugador + ".log");
-            RandomAccessFile raf = new RandomAccessFile(ruta, "rw");
+        File ruta = new File(GAMES_FOLDER + File.separator + nomJugador + ".log");
+        try (RandomAccessFile raf = new RandomAccessFile(ruta, "rw")){
             raf.seek(raf.length());
             raf.writeInt(numJugades);
             raf.writeInt(resultat);
@@ -91,10 +88,9 @@ public final class FileUtils {
 
         int rows;
         int[][] resultat = null;
+        File ruta = new File(GAMES_FOLDER + File.separator + nomJugador + ".log");
 
-        try {
-            File ruta = new File(GAMES_FOLDER + File.separator + nomJugador + ".log");
-            RandomAccessFile raf = new RandomAccessFile(ruta, "r");
+        try (RandomAccessFile raf = new RandomAccessFile(ruta, "r")){
             rows = (int) (raf.length() / 8);
             resultat = new int[rows][2];
             int pos = 0;
@@ -111,12 +107,10 @@ public final class FileUtils {
 
     static void savePlayers(String[][] players) {
         File fitxersJugadors = new File(PLAYER_LIST);
-        try {
-            PrintStream writer = new PrintStream(fitxersJugadors);
+        try (PrintStream writer = new PrintStream(fitxersJugadors)){
             for (String[] player : players) {
                 writer.println(player[0] + "," + player[1]);
             }
-            writer.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
